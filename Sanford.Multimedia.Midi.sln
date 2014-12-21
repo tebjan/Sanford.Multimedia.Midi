@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sanford.Multimedia.Midi", "Sanford.Multimedia.Midi.csproj", "{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sanford.Multimedia.Midi", "Midi\Sanford.Multimedia.Midi.csproj", "{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequencerDemo", "Demo\SequencerDemo\SequencerDemo.csproj", "{90480CE5-E392-4713-AB5C-7D659ACA0B85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiWatcher", "Demo\MidiWatcher\MidiWatcher.csproj", "{752C27BA-E092-455F-9B3F-1221E13FAE40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90480CE5-E392-4713-AB5C-7D659ACA0B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90480CE5-E392-4713-AB5C-7D659ACA0B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90480CE5-E392-4713-AB5C-7D659ACA0B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90480CE5-E392-4713-AB5C-7D659ACA0B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{752C27BA-E092-455F-9B3F-1221E13FAE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{752C27BA-E092-455F-9B3F-1221E13FAE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{752C27BA-E092-455F-9B3F-1221E13FAE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{752C27BA-E092-455F-9B3F-1221E13FAE40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

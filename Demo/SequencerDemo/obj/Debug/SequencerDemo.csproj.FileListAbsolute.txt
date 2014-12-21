@@ -1,0 +1,11 @@
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\bin\Debug\SequencerDemo.exe
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\bin\Debug\SequencerDemo.pdb
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\bin\Debug\Sanford.Multimedia.Midi.dll
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\bin\Debug\Sanford.Multimedia.Midi.pdb
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\obj\Debug\SequencerDemo.csprojResolveAssemblyReference.cache
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\obj\Debug\SequencerDemo.AboutDialog.resources
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\obj\Debug\SequencerDemo.Form1.resources
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\obj\Debug\SequencerDemo.Properties.Resources.resources
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\obj\Debug\SequencerDemo.csproj.GenerateResource.Cache
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\obj\Debug\SequencerDemo.exe
+C:\Dev\vvvv\Sanford.Multimedia.Midi\Demo\SequencerDemo\obj\Debug\SequencerDemo.pdb
