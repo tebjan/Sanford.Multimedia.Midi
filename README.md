@@ -6,9 +6,8 @@ This is all source code of the C# MIDI toolkit from CodeProject by Leslie Sanfor
 Improvements:
 - 64-bit compatible
 - Windows 8 compatible
-- removed the need of additional assemblies
-
-So far I was able to find the sources of the referenced assemblies and I've added them as sources into the project to reduce the amout of .dll files floating around.
+- Does not require additional assemblies
+- Faster midi file reading in Release build
 
 If you have any improvement or fix to this library, please don't hesitate to make a fork and open a pull request.
 
