@@ -39,7 +39,7 @@ namespace Sanford.Multimedia.Midi
 {
     public partial class InputDevice
     {
-        public override int Handle
+        public override IntPtr Handle
         {
             get 
             { 

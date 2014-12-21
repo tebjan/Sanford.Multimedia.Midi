@@ -44,21 +44,21 @@ namespace Sanford.Multimedia.Midi
     public abstract class OutputDeviceBase : MidiDevice
     {
         [DllImport("winmm.dll")]
-        protected static extern int midiOutReset(int handle);
+        protected static extern int midiOutReset(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutShortMsg(int handle, int message);
+        protected static extern int midiOutShortMsg(IntPtr handle, int message);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutPrepareHeader(int handle,
+        protected static extern int midiOutPrepareHeader(IntPtr handle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutUnprepareHeader(int handle,
+        protected static extern int midiOutUnprepareHeader(IntPtr handle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutLongMsg(int handle,
+        protected static extern int midiOutLongMsg(IntPtr handle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
@@ -89,7 +89,7 @@ namespace Sanford.Multimedia.Midi
         private MidiHeaderBuilder headerBuilder = new MidiHeaderBuilder();
 
         // The device handle.
-        protected int hndle = 0;        
+        protected IntPtr hndle = IntPtr.Zero;        
 
         public OutputDeviceBase(int deviceID) : base(deviceID)
         {
@@ -322,8 +322,8 @@ namespace Sanford.Multimedia.Midi
                 Close();          
             }
         }
-        
-        public override int Handle
+
+        public override IntPtr Handle
         {
             get
             {

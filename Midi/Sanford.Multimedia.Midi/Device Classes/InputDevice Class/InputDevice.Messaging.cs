@@ -42,7 +42,7 @@ namespace Sanford.Multimedia.Midi
 {
     public partial class InputDevice : MidiDevice
     {
-        private void HandleMessage(int handle, int msg, int instance, int param1, int param2)
+        private void HandleMessage(IntPtr handle, int msg, int instance, int param1, int param2)
         {
             if(msg == MIM_OPEN)
             {

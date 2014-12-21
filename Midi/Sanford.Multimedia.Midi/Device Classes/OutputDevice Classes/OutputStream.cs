@@ -44,29 +44,29 @@ namespace Sanford.Multimedia.Midi
     public sealed class OutputStream : OutputDeviceBase
     {
         [DllImport("winmm.dll")]
-        private static extern int midiStreamOpen(ref int handle, ref int deviceID, int reserved,
+        private static extern int midiStreamOpen(ref IntPtr handle, ref int deviceID, int reserved,
             OutputDevice.MidiOutProc proc, int instance, uint flag);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamClose(int handle);
+        private static extern int midiStreamClose(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamOut(int handle, IntPtr headerPtr, int sizeOfMidiHeader);
+        private static extern int midiStreamOut(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamPause(int handle);
+        private static extern int midiStreamPause(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamPosition(int handle, ref Time t, int sizeOfTime);
+        private static extern int midiStreamPosition(IntPtr handle, ref Time t, int sizeOfTime);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamProperty(int handle, ref Property p, uint flags);
+        private static extern int midiStreamProperty(IntPtr handle, ref Property p, uint flags);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamRestart(int handle);
+        private static extern int midiStreamRestart(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamStop(int handle);
+        private static extern int midiStreamStop(IntPtr handle);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Property

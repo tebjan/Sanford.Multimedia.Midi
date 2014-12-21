@@ -40,36 +40,36 @@ namespace Sanford.Multimedia.Midi
     public partial class InputDevice
     {
         // Represents the method that handles messages from Windows.
-        private delegate void MidiInProc(int handle, int msg, int instance, int param1, int param2); 
+        private delegate void MidiInProc(IntPtr handle, int msg, int instance, int param1, int param2); 
 
         #region Win32 MIDI Input Functions and Constants
 
         [DllImport("winmm.dll")]
-        private static extern int midiInOpen(ref int handle, int deviceID,
+        private static extern int midiInOpen(ref IntPtr handle, int deviceID,
             MidiInProc proc, int instance, int flags);
 
         [DllImport("winmm.dll")]
-        private static extern int midiInClose(int handle);
+        private static extern int midiInClose(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiInStart(int handle);
+        private static extern int midiInStart(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiInStop(int handle);
+        private static extern int midiInStop(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiInReset(int handle);
+        private static extern int midiInReset(IntPtr handle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiInPrepareHeader(int handle,
+        private static extern int midiInPrepareHeader(IntPtr handle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        private static extern int midiInUnprepareHeader(int handle,
+        private static extern int midiInUnprepareHeader(IntPtr handle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        private static extern int midiInAddBuffer(int handle,
+        private static extern int midiInAddBuffer(IntPtr handle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]

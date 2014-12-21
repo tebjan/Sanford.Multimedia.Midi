@@ -103,7 +103,7 @@ namespace Sanford.Multimedia
         /// <summary>
         /// Gets the device handle.
         /// </summary>
-        public abstract int Handle
+        public abstract IntPtr Handle
         {
             get;
         }

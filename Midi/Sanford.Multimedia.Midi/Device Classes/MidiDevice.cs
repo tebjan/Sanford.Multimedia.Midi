@@ -49,10 +49,10 @@ namespace Sanford.Multimedia.Midi
         #region Win32 Midi Device Functions
 
         [DllImport("winmm.dll")]
-        private static extern int midiConnect(int handleA, int handleB, int reserved);         
+        private static extern int midiConnect(IntPtr handleA, IntPtr handleB, int reserved);         
 
         [DllImport("winmm.dll")]
-        private static extern int midiDisconnect(int handleA, int handleB, int reserved);             
+        private static extern int midiDisconnect(IntPtr handleA, IntPtr handleB, int reserved);             
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace Sanford.Multimedia.Midi
         /// <exception cref="DeviceException">
         /// If an error occurred while connecting the two devices.
         /// </exception>
-        public static void Connect(int handleA, int handleB)
+        public static void Connect(IntPtr handleA, IntPtr handleB)
         {
             int result = midiConnect(handleA, handleB, 0);
 
@@ -105,7 +105,7 @@ namespace Sanford.Multimedia.Midi
         /// <exception cref="DeviceException">
         /// If an error occurred while disconnecting the two devices.
         /// </exception>
-        public static void Disconnect(int handleA, int handleB)
+        public static void Disconnect(IntPtr handleA, IntPtr handleB)
         {
             int result = midiDisconnect(handleA, handleB, 0);
 
