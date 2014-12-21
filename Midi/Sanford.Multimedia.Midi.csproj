@@ -53,8 +53,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Debug\Sanford.Multimedia.Midi.XML</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -76,8 +75,7 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Release\Sanford.Multimedia.Midi.XML</DocumentationFile>
     <DebugSymbols>false</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -255,9 +253,6 @@
     <Compile Include="Sanford.Collections\Immutable\Stack.cs" />
     <Compile Include="Sanford.Collections\PriorityQueue.cs" />
     <Compile Include="Sanford.Collections\SkipList.cs" />
-    <Compile Include="Sanford.Multimedia.Midi\UI\PianoKey.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Sanford.Multimedia.Timers\Time.cs" />
     <Compile Include="Sanford.Multimedia.Timers\Timer.cs" />
     <Compile Include="Sanford.Multimedia\Device.cs" />

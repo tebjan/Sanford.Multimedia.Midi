@@ -267,9 +267,9 @@ namespace Sanford.Multimedia.Midi
             endOfTrackMidiEvent.Previous = tail;
 
             #region Ensure
-
+#if(DEBUG)
             Debug.Assert(count == oldCount + trk.Count - 1);
-
+#endif
             #endregion
 
             #region Invariant

@@ -106,6 +106,7 @@ namespace Sanford.Multimedia.Midi.UI
             keyTable.Add(Keys.T, 6);
             keyTable.Add(Keys.G, 7);
             keyTable.Add(Keys.Y, 8);
+            keyTable.Add(Keys.Z, 8);
             keyTable.Add(Keys.H, 9);
             keyTable.Add(Keys.U, 10);
             keyTable.Add(Keys.J, 11);
