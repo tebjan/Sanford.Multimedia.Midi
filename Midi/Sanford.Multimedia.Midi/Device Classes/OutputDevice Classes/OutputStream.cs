@@ -150,7 +150,7 @@ namespace Sanford.Multimedia.Midi
         {
             #region Guard
 
-            if(!IsDisposed)
+            if(IsDisposed)
             {
                 return;
             }
