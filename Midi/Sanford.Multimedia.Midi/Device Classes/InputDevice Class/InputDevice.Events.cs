@@ -4,6 +4,8 @@ namespace Sanford.Multimedia.Midi
 {
     public partial class InputDevice
     {
+        public event EventHandler<RawMessageEventArgs> RawMessageReceived;
+
         public event EventHandler<ChannelMessageEventArgs> ChannelMessageReceived;
 
         public event EventHandler<SysExMessageEventArgs> SysExMessageReceived;
@@ -15,6 +17,19 @@ namespace Sanford.Multimedia.Midi
         public event EventHandler<InvalidShortMessageEventArgs> InvalidShortMessageReceived;
 
         public event EventHandler<InvalidSysExMessageEventArgs> InvalidSysExMessageReceived;
+
+        protected virtual void OnRawMessage(RawMessageEventArgs e)
+        {
+            EventHandler<RawMessageEventArgs> handler = RawMessageReceived;
+
+            if (handler != null)
+            {
+                context.Post(delegate(object dummy)
+                {
+                    handler(this, e);
+                }, null);
+            }
+        }
 
         protected virtual void OnChannelMessageReceived(ChannelMessageEventArgs e)
         {

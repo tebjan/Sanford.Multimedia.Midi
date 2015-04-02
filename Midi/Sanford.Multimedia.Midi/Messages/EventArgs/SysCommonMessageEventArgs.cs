@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sanford.Multimedia.Midi
 {
-    public class SysCommonMessageEventArgs : EventArgs
+    public class SysCommonMessageEventArgs : MidiEventArgsBase
     {
         private SysCommonMessage message;
 

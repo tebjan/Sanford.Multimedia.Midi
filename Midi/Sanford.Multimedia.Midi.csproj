@@ -138,6 +138,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sanford.Multimedia.Midi\Device Classes\OutputDevice Classes\OutputDeviceBase.cs" />
+    <Compile Include="Sanford.Multimedia.Midi\Messages\EventArgs\RawMessageEventArgs.cs" />
     <Compile Include="Sanford.Multimedia.Midi\Messages\Message Builders\KeySignatureBuilder.cs" />
     <Compile Include="Sanford.Multimedia.Midi\GeneralMidi.cs">
       <SubType>Code</SubType>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sanford.Multimedia.Midi
 {
-    public class ChannelMessageEventArgs : EventArgs
+    public class ChannelMessageEventArgs : MidiEventArgsBase
     {
         private ChannelMessage message;
 

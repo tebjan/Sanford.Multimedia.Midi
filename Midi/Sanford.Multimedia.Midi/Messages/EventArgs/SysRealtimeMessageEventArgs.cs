@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sanford.Multimedia.Midi
 {
-    public class SysRealtimeMessageEventArgs : EventArgs
+    public class SysRealtimeMessageEventArgs : MidiEventArgsBase
     {
         public static readonly SysRealtimeMessageEventArgs Start = new SysRealtimeMessageEventArgs(SysRealtimeMessage.StartMessage);
 

@@ -44,10 +44,14 @@ namespace Sanford.Multimedia.Midi
     {
         private void HandleMessage(IntPtr handle, int msg, int instance, int param1, int param2)
         {
-            if(msg == MIM_OPEN)
+
+            //first send RawMessage
+            delegateQueue.Post(HandleRawMessage, param1);
+
+            if (msg == MIM_OPEN)
             {
             }
-            else if(msg == MIM_CLOSE)
+            else if (msg == MIM_CLOSE)
             {
             }
             else if(msg == MIM_DATA)
@@ -70,6 +74,11 @@ namespace Sanford.Multimedia.Midi
             {
                 delegateQueue.Post(HandleInvalidSysExMessage, new IntPtr(param1));
             }
+        }
+
+        private void HandleRawMessage(object state)
+        {
+            OnRawMessage(new RawMessageEventArgs((int)state));
         }
 
         private void HandleShortMessage(object state)

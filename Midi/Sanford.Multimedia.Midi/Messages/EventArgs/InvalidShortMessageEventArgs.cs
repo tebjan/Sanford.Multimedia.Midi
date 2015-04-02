@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sanford.Multimedia.Midi
 {
-    public class InvalidShortMessageEventArgs : EventArgs
+    public class InvalidShortMessageEventArgs : MidiEventArgsBase
     {
         private int message;
 
