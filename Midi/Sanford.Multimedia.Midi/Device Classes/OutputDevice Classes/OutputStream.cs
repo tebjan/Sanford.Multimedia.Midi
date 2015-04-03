@@ -113,7 +113,7 @@ namespace Sanford.Multimedia.Midi
         {
             midiOutProc = HandleMessage;
 
-            int result = midiStreamOpen(ref hndle, ref deviceID, 1, midiOutProc, 0, CALLBACK_FUNCTION);
+            int result = midiStreamOpen(ref handle, ref deviceID, 1, midiOutProc, 0, CALLBACK_FUNCTION);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {

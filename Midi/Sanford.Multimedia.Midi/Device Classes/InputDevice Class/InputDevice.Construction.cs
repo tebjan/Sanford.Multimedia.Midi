@@ -49,13 +49,12 @@ namespace Sanford.Multimedia.Midi
         {
             midiInProc = HandleMessage;
 
-            int result = midiInOpen(ref handle, deviceID, midiInProc, 0, CALLBACK_FUNCTION);
+            delegateQueue = new DelegateQueue();
+            int result = midiInOpen(out handle, deviceID, midiInProc, 0, CALLBACK_FUNCTION);
+            
+            System.Diagnostics.Debug.WriteLine("MidiIn handle:" + handle.ToInt64());
 
-            if(result == MidiDeviceException.MMSYSERR_NOERROR)
-            {
-                delegateQueue = new DelegateQueue();
-            }
-            else
+            if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
                 throw new InputDeviceException(result);
             }

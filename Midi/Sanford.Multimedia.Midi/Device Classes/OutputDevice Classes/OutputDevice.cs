@@ -48,7 +48,7 @@ namespace Sanford.Multimedia.Midi
         #region Win32 Midi Output Functions and Constants
 
         [DllImport("winmm.dll")]
-        private static extern int midiOutOpen(ref IntPtr handle, int deviceID,
+        private static extern int midiOutOpen(out IntPtr handle, int deviceID,
             MidiOutProc proc, int instance, int flags);
 
         [DllImport("winmm.dll")]
@@ -71,7 +71,7 @@ namespace Sanford.Multimedia.Midi
         {
             midiOutProc = HandleMessage;
 
-            int result = midiOutOpen(ref hndle, deviceID, midiOutProc, 0, CALLBACK_FUNCTION);
+            int result = midiOutOpen(out handle, deviceID, midiOutProc, 0, CALLBACK_FUNCTION);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {

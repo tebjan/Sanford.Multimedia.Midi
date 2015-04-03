@@ -31,7 +31,6 @@
  */
 
 #endregion
-
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -42,9 +41,9 @@ namespace Sanford.Multimedia.Midi
 {
     public partial class InputDevice : MidiDevice
     {
-        private void HandleMessage(IntPtr handle, int msg, int instance, int param1, int param2)
+        private void HandleMessage(IntPtr hnd, int msg, int instance, int param1, int param2)
         {
-
+            
             //first send RawMessage
             delegateQueue.Post(HandleRawMessage, param1);
 

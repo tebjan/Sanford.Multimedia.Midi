@@ -45,7 +45,7 @@ namespace Sanford.Multimedia.Midi
         #region Win32 MIDI Input Functions and Constants
 
         [DllImport("winmm.dll")]
-        private static extern int midiInOpen(ref IntPtr handle, int deviceID,
+        private static extern int midiInOpen(out IntPtr handle, int deviceID,
             MidiInProc proc, int instance, int flags);
 
         [DllImport("winmm.dll")]

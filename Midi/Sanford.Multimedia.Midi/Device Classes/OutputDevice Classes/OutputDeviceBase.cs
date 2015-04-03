@@ -89,7 +89,7 @@ namespace Sanford.Multimedia.Midi
         private MidiHeaderBuilder headerBuilder = new MidiHeaderBuilder();
 
         // The device handle.
-        protected IntPtr hndle = IntPtr.Zero;        
+        protected IntPtr handle = IntPtr.Zero;        
 
         public OutputDeviceBase(int deviceID) : base(deviceID)
         {
@@ -327,7 +327,7 @@ namespace Sanford.Multimedia.Midi
         {
             get
             {
-                return hndle;
+                return handle;
             }
         }
 
