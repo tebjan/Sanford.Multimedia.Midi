@@ -24,6 +24,11 @@ namespace Sanford.Multimedia.Midi
                     (byte)ShortMessage.UnpackData1(message),
                     (byte)ShortMessage.UnpackData2(message) };
         }
+        
+        public RawMessageEventArgs(byte status, byte data1, byte data2)
+        {
+            this.message = new byte[] { status, data1, data2 };
+        }
 
         public byte[] Message
         {
