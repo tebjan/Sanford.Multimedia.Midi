@@ -49,7 +49,7 @@ namespace Sanford.Multimedia.Midi
         #region Fields
 
         // Used for generating tick events.
-        private Timer timer = new Timer();
+        private ITimer timer;
 
         // Parses meta message tempo change messages.
         private TempoChangeBuilder builder = new TempoChangeBuilder();
@@ -69,14 +69,15 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Initializes a new instance of the MidiInternalClock class.
         /// </summary>
-		public MidiInternalClock() : base(Timer.Capabilities.periodMin)
-		{ 
-            timer.Period = Timer.Capabilities.periodMin;
-            timer.Tick += new EventHandler(HandleTick); 
+		public MidiInternalClock()
+            : this(TimerCaps.Default.periodMin)
+        { 
         }
 
         public MidiInternalClock(int timerPeriod) : base(timerPeriod)
         {
+            timer = new ThreadTimer();
+
             timer.Period = timerPeriod;
             timer.Tick += new EventHandler(HandleTick); 
         }
@@ -89,15 +90,12 @@ namespace Sanford.Multimedia.Midi
         /// The IContainer to which the MidiInternalClock will add itself.
         /// </param>
         public MidiInternalClock(IContainer container) : 
-            base(Timer.Capabilities.periodMin)
+            this()
         {
             ///
             /// Required for Windows.Forms Class Composition Designer support
             ///
             container.Add(this);
-
-            timer.Period = Timer.Capabilities.periodMin;
-            timer.Tick += new EventHandler(HandleTick);
         }
 
         #endregion
