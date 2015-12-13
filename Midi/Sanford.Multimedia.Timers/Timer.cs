@@ -83,7 +83,7 @@ namespace Sanford.Multimedia.Timers
     /// <summary>
     /// Represents the Windows multimedia timer.
     /// </summary>
-    public sealed class Timer : ITimer
+    sealed class Timer : ITimer
     {
         #region Timer Members
 

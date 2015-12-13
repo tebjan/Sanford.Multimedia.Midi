@@ -76,8 +76,7 @@ namespace Sanford.Multimedia.Midi
 
         public MidiInternalClock(int timerPeriod) : base(timerPeriod)
         {
-            timer = new ThreadTimer();
-
+            timer = TimerFactory.Create();
             timer.Period = timerPeriod;
             timer.Tick += new EventHandler(HandleTick); 
         }
