@@ -1,4 +1,29 @@
-﻿using System;
+﻿#region License
+
+/* Copyright (c) 2015 Andreas Grimme
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy 
+ * of this software and associated documentation files (the "Software"), to 
+ * deal in the Software without restriction, including without limitation the 
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+ * sell copies of the Software, and to permit persons to whom the Software is 
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software. 
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ * THE SOFTWARE.
+ */
+
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -6,26 +31,30 @@ using System.Threading;
 
 namespace Sanford.Multimedia.Timers
 {
-    class TimerQueue
+    /// <summary>
+    /// Queues and executes timer events in an internal worker thread.
+    /// </summary>
+    class ThreadTimerQueue
     {
         Stopwatch watch = Stopwatch.StartNew();
         Thread loop;
+        List<Tick> tickQueue = new List<Tick>();
 
-        public static TimerQueue Instance
+        public static ThreadTimerQueue Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new TimerQueue();
+                    instance = new ThreadTimerQueue();
                 }
                 return instance;
 
             }
         }
-        static TimerQueue instance;
+        static ThreadTimerQueue instance;
 
-        private TimerQueue()
+        private ThreadTimerQueue()
         {
         }
 
@@ -38,8 +67,8 @@ namespace Sanford.Multimedia.Timers
                     Timer = timer,
                     Time = watch.Elapsed
                 };
-                ticks.Add(tick);
-                ticks.Sort();
+                tickQueue.Add(tick);
+                tickQueue.Sort();
 
                 if (loop == null)
                 {
@@ -55,16 +84,16 @@ namespace Sanford.Multimedia.Timers
             lock (this)
             {
                 int i = 0;
-                for (; i < ticks.Count; ++i)
+                for (; i < tickQueue.Count; ++i)
                 {
-                    if (ticks[i].Timer == timer)
+                    if (tickQueue[i].Timer == timer)
                     {
                         break;
                     }
                 }
-                if (i < ticks.Count)
+                if (i < tickQueue.Count)
                 {
-                    ticks.RemoveAt(i);
+                    tickQueue.RemoveAt(i);
                 }
                 Monitor.PulseAll(this);
             }
@@ -86,8 +115,6 @@ namespace Sanford.Multimedia.Timers
             }
         }
 
-        List<Tick> ticks = new List<Tick>();
-
         static TimeSpan Min(TimeSpan x0, TimeSpan x1)
         {
             if (x0 > x1)
@@ -100,19 +127,22 @@ namespace Sanford.Multimedia.Timers
             }
         }
 
+        /// <summary>
+        /// The thread to execute the timer events
+        /// </summary>
         private void TimerLoop()
         {
             lock (this)
             {
                 TimeSpan maxTimeout = TimeSpan.FromMilliseconds(500);
 
-                for (int empty = 0; empty < 3; ++empty)
+                for (int queueEmptyCount = 0; queueEmptyCount < 3; ++queueEmptyCount)
                 {
                     var waitTime = maxTimeout;
-                    if (ticks.Count > 0)
+                    if (tickQueue.Count > 0)
                     {
-                        waitTime = Min(ticks[0].Time - watch.Elapsed, waitTime);
-                        empty = 0;
+                        waitTime = Min(tickQueue[0].Time - watch.Elapsed, waitTime);
+                        queueEmptyCount = 0;
                     }
 
                     if (waitTime > TimeSpan.Zero)
@@ -120,20 +150,21 @@ namespace Sanford.Multimedia.Timers
                         Monitor.Wait(this, waitTime);
                     }
 
-                    if (ticks.Count > 0)
+                    if (tickQueue.Count > 0)
                     {
-                        var tick = ticks[0];
+                        var tick = tickQueue[0];
+                        var mode = tick.Timer.Mode;
                         Monitor.Exit(this);
                         tick.Timer.DoTick();
                         Monitor.Enter(this);
-                        if (tick.Timer.Mode == TimerMode.Periodic)
+                        if (mode == TimerMode.Periodic)
                         {
-                            tick.Time += tick.Timer.period;
-                            ticks.Sort();
+                            tick.Time += tick.Timer.PeriodTimeSpan;
+                            tickQueue.Sort();
                         }
                         else
                         {
-                            ticks.RemoveAt(0);
+                            tickQueue.RemoveAt(0);
                         }
                     }
                 }
