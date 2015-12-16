@@ -10,13 +10,19 @@ namespace SequencerDemo
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             try
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+
+                var mainWindow = new Form1();
+                if (args.Length >= 1)
+                {
+                    mainWindow.Open(args[0]);
+                }
+                Application.Run(mainWindow);
             }
             catch(Exception ex)
             {

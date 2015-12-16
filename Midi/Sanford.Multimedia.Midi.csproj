@@ -252,8 +252,12 @@
     <Compile Include="Sanford.Collections\Immutable\Stack.cs" />
     <Compile Include="Sanford.Collections\PriorityQueue.cs" />
     <Compile Include="Sanford.Collections\SkipList.cs" />
+    <Compile Include="Sanford.Multimedia.Timers\ThreadTimer.cs" />
+    <Compile Include="Sanford.Multimedia.Timers\ITimer.cs" />
     <Compile Include="Sanford.Multimedia.Timers\Time.cs" />
     <Compile Include="Sanford.Multimedia.Timers\Timer.cs" />
+    <Compile Include="Sanford.Multimedia.Timers\TimerFactory.cs" />
+    <Compile Include="Sanford.Multimedia.Timers\ThreadTimerQueue.cs" />
     <Compile Include="Sanford.Multimedia\Device.cs" />
     <Compile Include="Sanford.Multimedia\DeviceException.cs" />
     <Compile Include="Sanford.Multimedia\ErrorEventArgs.cs" />

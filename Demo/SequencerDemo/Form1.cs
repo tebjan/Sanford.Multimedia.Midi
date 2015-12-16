@@ -99,22 +99,26 @@ namespace SequencerDemo
             if(openMidiFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = openMidiFileDialog.FileName;
+                Open(fileName);
+            }
+        }
 
-                try
-                {
-                    sequencer1.Stop();
-                    playing = false;
-                    sequence1.LoadAsync(fileName);
-                    this.Cursor = Cursors.WaitCursor;
-                    startButton.Enabled = false;
-                    continueButton.Enabled = false;
-                    stopButton.Enabled = false;
-                    openToolStripMenuItem.Enabled = false;
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }                
+        public void Open(string fileName)
+        {
+            try
+            {
+                sequencer1.Stop();
+                playing = false;
+                sequence1.LoadAsync(fileName);
+                this.Cursor = Cursors.WaitCursor;
+                startButton.Enabled = false;
+                continueButton.Enabled = false;
+                stopButton.Enabled = false;
+                openToolStripMenuItem.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
 

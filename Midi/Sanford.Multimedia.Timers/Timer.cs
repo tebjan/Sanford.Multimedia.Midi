@@ -70,12 +70,20 @@ namespace Sanford.Multimedia.Timers
         /// Maximum supported period in milliseconds.
         /// </summary>
         public int periodMax;
+
+        public static TimerCaps Default
+        {
+            get
+            {
+                return new TimerCaps { periodMin = 1, periodMax = Int32.MaxValue };
+            }
+        }
     }
 
     /// <summary>
     /// Represents the Windows multimedia timer.
     /// </summary>
-    public sealed class Timer : IComponent
+    sealed class Timer : ITimer
     {
         #region Timer Members
 
