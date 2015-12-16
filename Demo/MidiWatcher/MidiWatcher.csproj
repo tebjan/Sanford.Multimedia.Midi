@@ -103,7 +103,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Midi\Sanford.Multimedia.Midi.csproj">
+    <ProjectReference Include="..\..\Source\Sanford.Multimedia.Midi.csproj">
       <Project>{4269c72a-8d3a-4737-8f89-72eaa33ea9e1}</Project>
       <Name>Sanford.Multimedia.Midi</Name>
     </ProjectReference>
