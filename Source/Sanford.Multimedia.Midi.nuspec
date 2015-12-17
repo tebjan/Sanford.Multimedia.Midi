@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Sanford.Multimedia.Midi</id>
-        <version>6.1.0</version>
+        <version>6.1.1</version>
         <title>MIDI Toolkit</title>
         <authors>Leslie Sanford,Tebjan Halm,Andreas Grimme</authors>
         <owners>Leslie Sanford</owners>
         <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
         <projectUrl>http://www.codeproject.com/Articles/6228/C-MIDI-Toolkit</projectUrl>
-        <iconUrl>https://raw.githubusercontent.com/tebjan/Sanford.Multimedia.Midi/master/Midi/Icon_-_General_MIDI.png</iconUrl>
+        <iconUrl>https://raw.githubusercontent.com/tebjan/Sanford.Multimedia.Midi/master/Source/Icon_-_General_MIDI.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>
           A toolkit for creating MIDI applications with .NET
