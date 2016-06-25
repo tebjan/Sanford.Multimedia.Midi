@@ -115,7 +115,21 @@ namespace Sanford.Multimedia.Midi
 
             Load(fileName);
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the Sequence class with the specified
+        /// file name of the MIDI file to load.
+        /// </summary>
+        /// <param name="fileStream">
+        /// The stream of the MIDI file to load.
+        /// </param>
+        public Sequence(Stream fileStream)
+        {
+            InitializeBackgroundWorkers();
 
+            Load(fileStream);
+        }
+        
         private void InitializeBackgroundWorkers()
         {
             loadWorker.DoWork += new DoWorkEventHandler(LoadDoWork);
@@ -172,6 +186,56 @@ namespace Sanford.Multimedia.Midi
                 for(int i = 0; i < newProperties.TrackCount; i++)
                 {
                     reader.Read(stream);
+                    newTracks.Add(reader.Track);
+                }
+
+                properties = newProperties;
+                tracks = newTracks;
+            }
+
+            #region Ensure
+
+            Debug.Assert(Count == properties.TrackCount);
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Loads a MIDI stream into the Sequence.
+        /// </summary>
+        /// <param name="fileStream">
+        /// The MIDI file's stream.
+        /// </param>
+        public void Load(Stream fileStream)
+        {
+            #region Require
+
+            if (disposed)
+            {
+                throw new ObjectDisposedException("Sequence");
+            }
+            else if (IsBusy)
+            {
+                throw new InvalidOperationException();
+            }
+            else if (fileStream == null)
+            {
+                throw new ArgumentNullException("fileStream");
+            }
+
+            #endregion                        
+
+            using (fileStream)
+            {
+                MidiFileProperties newProperties = new MidiFileProperties();
+                TrackReader reader = new TrackReader();
+                List<Track> newTracks = new List<Track>();
+
+                newProperties.Read(fileStream);
+
+                for (int i = 0; i < newProperties.TrackCount; i++)
+                {
+                    reader.Read(fileStream);
                     newTracks.Add(reader.Track);
                 }
 
