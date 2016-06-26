@@ -118,7 +118,7 @@ namespace Sanford.Multimedia.Midi
         
         /// <summary>
         /// Initializes a new instance of the Sequence class with the specified
-        /// file name of the MIDI file to load.
+        /// file stream of the MIDI file to load.
         /// </summary>
         /// <param name="fileStream">
         /// The stream of the MIDI file to load.
