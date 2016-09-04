@@ -49,7 +49,7 @@ namespace Sanford.Multimedia.Midi
 
         [DllImport("winmm.dll")]
         private static extern int midiOutOpen(out IntPtr handle, int deviceID,
-            MidiOutProc proc, int instance, int flags);
+            MidiOutProc proc, IntPtr instance, int flags);
 
         [DllImport("winmm.dll")]
         private static extern int midiOutClose(IntPtr handle);
@@ -71,7 +71,7 @@ namespace Sanford.Multimedia.Midi
         {
             midiOutProc = HandleMessage;
 
-            int result = midiOutOpen(out handle, deviceID, midiOutProc, 0, CALLBACK_FUNCTION);
+            int result = midiOutOpen(out handle, deviceID, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
@@ -247,7 +247,7 @@ namespace Sanford.Multimedia.Midi
 
         #region Win32 Midi Output Error Function
 
-        [DllImport("winmm.dll")]
+        [DllImport("winmm.dll", CharSet = CharSet.Unicode)]
         private static extern int midiOutGetErrorText(int errCode, 
             StringBuilder message, int sizeOfMessage);
 
