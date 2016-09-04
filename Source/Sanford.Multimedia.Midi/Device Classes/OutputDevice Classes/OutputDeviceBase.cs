@@ -62,7 +62,7 @@ namespace Sanford.Multimedia.Midi
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutGetDevCaps(int deviceID,
+        protected static extern int midiOutGetDevCaps(IntPtr deviceID,
             ref MidiOutCaps caps, int sizeOfMidiOutCaps);
 
         [DllImport("winmm.dll")]
@@ -251,7 +251,8 @@ namespace Sanford.Multimedia.Midi
             MidiOutCaps caps = new MidiOutCaps();
 
             // Get the device's capabilities.
-            int result = midiOutGetDevCaps(deviceID, ref caps, Marshal.SizeOf(caps));
+            IntPtr devId = (IntPtr)deviceID;
+            int result = midiOutGetDevCaps(devId, ref caps, Marshal.SizeOf(caps));
 
             // If the capabilities could not be retrieved.
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
