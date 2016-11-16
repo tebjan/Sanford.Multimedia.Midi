@@ -45,7 +45,7 @@ namespace Sanford.Multimedia.Midi
     {
         [DllImport("winmm.dll")]
         private static extern int midiStreamOpen(ref IntPtr handle, ref int deviceID, int reserved,
-            OutputDevice.MidiOutProc proc, int instance, uint flag);
+            OutputDevice.MidiOutProc proc, IntPtr instance, uint flag);
 
         [DllImport("winmm.dll")]
         private static extern int midiStreamClose(IntPtr handle);
@@ -113,7 +113,7 @@ namespace Sanford.Multimedia.Midi
         {
             midiOutProc = HandleMessage;
 
-            int result = midiStreamOpen(ref handle, ref deviceID, 1, midiOutProc, 0, CALLBACK_FUNCTION);
+            int result = midiStreamOpen(ref handle, ref deviceID, 1, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {

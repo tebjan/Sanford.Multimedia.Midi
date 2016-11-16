@@ -84,7 +84,7 @@ namespace Sanford.Multimedia.Midi
 
         #region Win32 Midi Input Error Function
 
-        [DllImport("winmm.dll")]
+        [DllImport("winmm.dll", CharSet = CharSet.Unicode)]
         private static extern int midiInGetErrorText(int errCode, 
             StringBuilder errMsg, int sizeOfErrMsg);
 

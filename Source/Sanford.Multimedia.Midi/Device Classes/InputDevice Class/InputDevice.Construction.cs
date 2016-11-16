@@ -32,43 +32,45 @@
 
 #endregion
 
+using System;
 using System.Threading;
 using Sanford.Threading;
 
 namespace Sanford.Multimedia.Midi
-{
-    public partial class InputDevice : MidiDevice
-    {
-        #region Construction
+   {
+   public partial class InputDevice : MidiDevice
+      {
+      #region Construction
 
-        /// <summary>
-        /// Initializes a new instance of the InputDevice class with the 
-        /// specified device ID.
-        /// </summary>
-        public InputDevice(int deviceID) : base(deviceID)
-        {
-            midiInProc = HandleMessage;
+      /// <summary>
+      /// Initializes a new instance of the InputDevice class with the 
+      /// specified device ID.
+      /// </summary>
+      public InputDevice(int deviceID)
+         : base(deviceID)
+         {
+         midiInProc = HandleMessage;
 
-            delegateQueue = new DelegateQueue();
-            int result = midiInOpen(out handle, deviceID, midiInProc, 0, CALLBACK_FUNCTION);
-            
-            System.Diagnostics.Debug.WriteLine("MidiIn handle:" + handle.ToInt64());
+         delegateQueue = new DelegateQueue();
+         int result = midiInOpen(out handle, deviceID, midiInProc, IntPtr.Zero, CALLBACK_FUNCTION);
 
-            if(result != MidiDeviceException.MMSYSERR_NOERROR)
+         System.Diagnostics.Debug.WriteLine("MidiIn handle:" + handle.ToInt64());
+
+         if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
-                throw new InputDeviceException(result);
+            throw new InputDeviceException(result);
             }
-        }
+         }
 
-        ~InputDevice()
-        {
-            if(!IsDisposed)
+      ~InputDevice()
+         {
+         if(!IsDisposed)
             {
-                midiInReset(handle);
-                midiInClose(handle);
+            midiInReset(handle);
+            midiInClose(handle);
             }
-        }
+         }
 
-        #endregion
-    }
-}
+      #endregion
+      }
+   }

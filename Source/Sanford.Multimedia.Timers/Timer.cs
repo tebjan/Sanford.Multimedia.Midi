@@ -106,7 +106,7 @@ namespace Sanford.Multimedia.Timers
 
         // Creates and starts the timer.
         [DllImport("winmm.dll")]
-        private static extern int timeSetEvent(int delay, int resolution, TimeProc proc, int user, int mode);
+        private static extern int timeSetEvent(int delay, int resolution, TimeProc proc, IntPtr user, int mode);
 
         // Stops and destroys the timer.
         [DllImport("winmm.dll")]
@@ -271,13 +271,13 @@ namespace Sanford.Multimedia.Timers
             if(Mode == TimerMode.Periodic)
             {
                 // Create and start timer.
-                timerID = timeSetEvent(Period, Resolution, timeProcPeriodic, 0, (int)Mode);
+                timerID = timeSetEvent(Period, Resolution, timeProcPeriodic, IntPtr.Zero, (int)Mode);
             }
             // Else the one shot event callback should be used.
             else
             {
                 // Create and start timer.
-                timerID = timeSetEvent(Period, Resolution, timeProcOneShot, 0, (int)Mode);
+                timerID = timeSetEvent(Period, Resolution, timeProcOneShot, IntPtr.Zero, (int)Mode);
             }
 
             // If the timer was created successfully.

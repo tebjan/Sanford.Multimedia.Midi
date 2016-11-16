@@ -49,10 +49,10 @@ namespace Sanford.Multimedia.Midi
         #region Win32 Midi Device Functions
 
         [DllImport("winmm.dll")]
-        private static extern int midiConnect(IntPtr handleA, IntPtr handleB, int reserved);         
+        private static extern int midiConnect(IntPtr handleA, IntPtr handleB, IntPtr reserved);         
 
         [DllImport("winmm.dll")]
-        private static extern int midiDisconnect(IntPtr handleA, IntPtr handleB, int reserved);             
+        private static extern int midiDisconnect(IntPtr handleA, IntPtr handleB, IntPtr reserved);             
 
         #endregion
 
@@ -84,7 +84,7 @@ namespace Sanford.Multimedia.Midi
         /// </exception>
         public static void Connect(IntPtr handleA, IntPtr handleB)
         {
-            int result = midiConnect(handleA, handleB, 0);
+            int result = midiConnect(handleA, handleB, IntPtr.Zero);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
@@ -107,7 +107,7 @@ namespace Sanford.Multimedia.Midi
         /// </exception>
         public static void Disconnect(IntPtr handleA, IntPtr handleB)
         {
-            int result = midiDisconnect(handleA, handleB, 0);
+            int result = midiDisconnect(handleA, handleB, IntPtr.Zero);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
