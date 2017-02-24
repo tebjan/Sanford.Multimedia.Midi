@@ -37,10 +37,11 @@ namespace Sanford.Multimedia.Midi
 			FInDevice.Dispose();
 		}
 
-		public static MidiEvents FromDeviceID(int deviceID)
+		public static InputDeviceMidiEvents FromDeviceID(int deviceID)
 		{
 			var deviceCount = InputDevice.DeviceCount;
-			if (deviceCount > 0) {
+			if (deviceCount > 0)
+            {
 				deviceID %= deviceCount;
 				return new InputDeviceMidiEvents(new InputDevice(deviceID));
 			}

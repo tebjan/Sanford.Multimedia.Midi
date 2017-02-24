@@ -124,6 +124,20 @@ namespace Sanford.Multimedia.Midi
             Send(message.Message);
         }
 
+        public virtual void SendRaw(int message)
+        {
+            #region Require
+
+            if (IsDisposed)
+            {
+                throw new ObjectDisposedException(this.GetType().Name);
+            }
+
+            #endregion
+
+            Send(message);
+        }
+
         public virtual void Send(SysExMessage message)
         {
             #region Require
