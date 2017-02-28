@@ -309,18 +309,28 @@ namespace Sanford.Multimedia.Midi
 
             FileStream stream = new FileStream(fileName, FileMode.Create,
                 FileAccess.Write, FileShare.None);
-
-            using(stream)
+            using (stream)
             {
-                properties.Write(stream);
+                Save(stream);
+            }
+        }
 
-                TrackWriter writer = new TrackWriter();
+        /// <summary>
+        /// Saves the Sequence as a Stream.
+        /// </summary>
+        /// <param name="stream">
+        /// The stream to use for saving the sequence.
+        /// </param>
+        public void Save(Stream stream)
+        {
+            properties.Write(stream);
 
-                foreach(Track trk in tracks)
-                {
-                    writer.Track = trk;
-                    writer.Write(stream);
-                }
+            TrackWriter writer = new TrackWriter();
+
+            foreach(Track trk in tracks)
+            {
+                writer.Track = trk;
+                writer.Write(stream);
             }
         }
 
