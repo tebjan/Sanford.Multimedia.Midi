@@ -43,10 +43,6 @@ namespace Sanford.Multimedia.Midi
     {
         private void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
-
-            //first send RawMessage
-            delegateQueue.Post(HandleRawMessage, param1.ToInt64());
-
             if (msg == MIM_OPEN)
             {
             }
@@ -84,6 +80,10 @@ namespace Sanford.Multimedia.Midi
         private void HandleShortMessage(object state)
         {
             int message = (int)state;
+
+            //first send RawMessage
+            OnRawMessage(new RawMessageEventArgs(message));
+
             int status = ShortMessage.UnpackStatus(message);
 
             if (status >= (int)ChannelCommand.NoteOff &&

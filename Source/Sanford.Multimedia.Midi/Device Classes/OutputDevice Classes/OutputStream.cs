@@ -453,11 +453,11 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
-        protected override void HandleMessage(int handle, int msg, int instance, int param1, int param2)
+        protected override void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
             if(msg == MOM_POSITIONCB)
             {
-                delegateQueue.Post(HandleNoOp, new IntPtr(param1));
+                delegateQueue.Post(HandleNoOp, param1);
             }
             else
             {

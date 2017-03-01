@@ -75,7 +75,7 @@ namespace Sanford.Multimedia.Midi
         protected delegate void GenericDelegate<T>(T args);
 
         // Represents the method that handles messages from Windows.
-        protected delegate void MidiOutProc(int handle, int msg, int instance, int param1, int param2);
+        protected delegate void MidiOutProc(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2);
 
         // For releasing buffers.
         protected DelegateQueue delegateQueue = new DelegateQueue();
@@ -279,7 +279,7 @@ namespace Sanford.Multimedia.Midi
         }
 
         // Handles Windows messages.
-        protected virtual void HandleMessage(int handle, int msg, int instance, int param1, int param2)
+        protected virtual void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
             if(msg == MOM_OPEN)
             {
@@ -289,7 +289,7 @@ namespace Sanford.Multimedia.Midi
             }
             else if(msg == MOM_DONE)
             {
-                delegateQueue.Post(ReleaseBuffer, new IntPtr(param1));
+                delegateQueue.Post(ReleaseBuffer, param1);
             }
         }
 
