@@ -27,6 +27,7 @@ namespace Sanford.Multimedia.Midi
         public RawMessageEventArgs(int message)
         {
             this.intMessage = message;
+            intMessageBuilt = true;
             this.message = BuildByteMessage(intMessage);
         }
 
