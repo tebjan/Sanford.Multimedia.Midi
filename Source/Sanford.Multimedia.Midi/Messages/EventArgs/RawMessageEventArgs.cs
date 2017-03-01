@@ -20,20 +20,21 @@ namespace Sanford.Multimedia.Midi
     /// <seealso cref="Sanford.Multimedia.Midi.MidiEventArgsBase" />
     public class RawMessageEventArgs : MidiEventArgsBase
     {
-        readonly byte[] message;
+        byte[] message;
         bool intMessageBuilt;
+        bool rawMessageBuilt;
         int intMessage;
 
         public RawMessageEventArgs(int message)
         {
             this.intMessage = message;
             intMessageBuilt = true;
-            this.message = BuildByteMessage(intMessage);
         }
 
         public RawMessageEventArgs(byte status, byte data1, byte data2)
         {
             this.message = new byte[] { status, data1, data2 };
+            rawMessageBuilt = true;
         }
 
         private static byte[] BuildByteMessage(int intMessage)
@@ -63,6 +64,11 @@ namespace Sanford.Multimedia.Midi
         {
             get
             {
+                if(!rawMessageBuilt)
+                {
+                    this.message = BuildByteMessage(intMessage);
+                    rawMessageBuilt = true;
+                }
                 return message;
             }
         }
@@ -79,6 +85,27 @@ namespace Sanford.Multimedia.Midi
 
                 return intMessage;
             }
+        }
+
+        public static RawMessageEventArgs FromChannelMessage(ChannelMessageEventArgs arg)
+        {
+            var raw = new RawMessageEventArgs(arg.Message.Message);
+            raw.DeltaFrames = arg.DeltaFrames;
+            return raw;
+        }
+
+        public static RawMessageEventArgs FromSysCommonMessage(SysCommonMessageEventArgs arg)
+        {
+            var raw = new RawMessageEventArgs(arg.Message.Message);
+            raw.DeltaFrames = arg.DeltaFrames;
+            return raw;
+        }
+
+        public static RawMessageEventArgs FromSysRealtimeMessage(SysRealtimeMessageEventArgs arg)
+        {
+            var raw = new RawMessageEventArgs(arg.Message.Message);
+            raw.DeltaFrames = arg.DeltaFrames;
+            return raw;
         }
     }
 }

@@ -71,12 +71,6 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
-        private void HandleRawMessage(object state)
-        {
-            long param = (long)state;
-            OnRawMessage(new RawMessageEventArgs(unchecked((int)param)));
-        }
-
         private void HandleShortMessage(object state)
         {
             int message = (int)state;
