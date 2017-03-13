@@ -48,15 +48,30 @@ namespace Sanford.Multimedia.Midi
 			return null;
 		}
 
-		/// <summary>
-		/// All incoming midi messages in byte format
+        /// <summary>
+		/// All incoming midi messages in short format
 		/// </summary>
-		public event EventHandler<RawMessageEventArgs> RawMessageReceived {
+		public event MidiMessageEventHandler MessageReceived
+        {
+            add
+            {
+                FInDevice.MessageReceived += value;
+            }
+            remove
+            {
+                FInDevice.MessageReceived -= value;
+            }
+        }
+
+        /// <summary>
+        /// All incoming midi messages in short format
+        /// </summary>
+        public event EventHandler<ShortMessageEventArgs> ShortMessageReceived {
 			add {
-				FInDevice.RawMessageReceived += value;
+				FInDevice.ShortMessageReceived += value;
 			}
 			remove {
-				FInDevice.RawMessageReceived -= value;
+				FInDevice.ShortMessageReceived -= value;
 			}
 		}
 

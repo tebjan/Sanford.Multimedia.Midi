@@ -39,20 +39,38 @@ namespace Sanford.Multimedia.Midi
         {
         }
 
-        public event EventHandler<RawMessageEventArgs> RawMessageReceived
+        public event MidiMessageEventHandler MessageReceived
+        {
+            add
+            {
+                foreach (var elem in FMidiEventsList)
+                {
+                    elem.MessageReceived += value;
+                }
+            }
+            remove
+            {
+                foreach (var elem in FMidiEventsList)
+                {
+                    elem.MessageReceived -= value;
+                }
+            }
+        }
+
+        public event EventHandler<ShortMessageEventArgs> ShortMessageReceived
         {
             add
             {
                 foreach (var elem in FMidiEventsList) 
                 {
-                    elem.RawMessageReceived += value;
+                    elem.ShortMessageReceived += value;
                 }
             }
             remove
             {
                 foreach (var elem in FMidiEventsList) 
                 {
-                    elem.RawMessageReceived -= value;
+                    elem.ShortMessageReceived -= value;
                 }
             }
         }

@@ -139,7 +139,7 @@ namespace Sanford.Multimedia.Midi
 	/// using meta messages.
 	/// </remarks>
 	[ImmutableObject(true)]
-	public sealed class MetaMessage : IMidiMessage
+	public sealed class MetaMessage : MidiMessageBase, IMidiMessage
 	{
         #region MetaMessage Members
 

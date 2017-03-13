@@ -14,11 +14,17 @@ namespace Sanford.Multimedia.Midi
         /// Set it to any negative value for custom event sources.
         /// </summary>
         int DeviceID { get; }
-        
+
         /// <summary>
-        /// All incoming midi messages in byte format
+        /// Occurs when any message was received. The underlying type of the message should be as specific as possible.
+        /// Channel, Common, Realtime or SysEx.
         /// </summary>
-        event EventHandler<RawMessageEventArgs> RawMessageReceived;
+        event MidiMessageEventHandler MessageReceived;
+
+        /// <summary>
+        /// All incoming midi short messages 
+        /// </summary>
+        event EventHandler<ShortMessageEventArgs> ShortMessageReceived;
         
         /// <summary>
         /// Channel messages like, note, controller, program, ...

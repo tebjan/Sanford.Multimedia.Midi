@@ -49,7 +49,9 @@ namespace Sanford.Multimedia.Midi
 
         SystemRealtime,
 
-        Meta
+        Meta,
+
+        Short
     }
 
     /// <summary>
@@ -77,6 +79,16 @@ namespace Sanford.Multimedia.Midi
         /// Gets the MIDI event's type.
         /// </summary>
         MessageType MessageType
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Delta samples when the event should be processed in the next audio buffer.
+        /// Leave at 0 for realtime input to play as fast as possible.
+        /// Set to the desired sample in the next buffer if you play a midi sequence synchronized to the audio callback
+        /// </summary>
+        int DeltaFrames
         {
             get;
         }

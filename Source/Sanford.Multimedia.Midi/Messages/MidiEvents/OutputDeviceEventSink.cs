@@ -36,20 +36,37 @@ namespace Sanford.Multimedia.Midi
 
         private void RegisterEvents()
         {
-            FEventSource.RawMessageReceived += EventSource_RawMessageReceived;
+            FEventSource.MessageReceived += FEventSource_MessageReceived;
+            FEventSource.ShortMessageReceived += EventSource_RawMessageReceived;
             FEventSource.ChannelMessageReceived += EventSource_ChannelMessageReceived;
             FEventSource.SysCommonMessageReceived += EventSource_SysCommonMessageReceived;
             FEventSource.SysExMessageReceived += EventSource_SysExMessageReceived;
             FEventSource.SysRealtimeMessageReceived += EventSource_SysRealtimeMessageReceived;
         }
 
+
         private void UnRegisterEvents()
         {
-            FEventSource.RawMessageReceived -= EventSource_RawMessageReceived;
+            FEventSource.MessageReceived -= FEventSource_MessageReceived;
+            FEventSource.ShortMessageReceived -= EventSource_RawMessageReceived;
             FEventSource.ChannelMessageReceived -= EventSource_ChannelMessageReceived;
             FEventSource.SysCommonMessageReceived -= EventSource_SysCommonMessageReceived;
             FEventSource.SysExMessageReceived -= EventSource_SysExMessageReceived;
             FEventSource.SysRealtimeMessageReceived -= EventSource_SysRealtimeMessageReceived;
+        }
+
+        private void FEventSource_MessageReceived(IMidiMessage message)
+        {
+            var shortMessage = message as ShortMessage;
+            if (shortMessage != null)
+            {
+                FOutDevice.SendShort(shortMessage.Message);
+                return;
+            }
+
+            var sysExMessage = message as SysExMessage;
+            if (sysExMessage != null)
+                FOutDevice.Send(sysExMessage);
         }
 
 
@@ -73,9 +90,9 @@ namespace Sanford.Multimedia.Midi
             FOutDevice.Send(e.Message);
         }
 
-        private void EventSource_RawMessageReceived(object sender, RawMessageEventArgs e)
+        private void EventSource_RawMessageReceived(object sender, ShortMessageEventArgs e)
         {
-            FOutDevice.SendRaw(e.IntMessage);
+            FOutDevice.SendShort(e.Message.Message);
         }
 
         /// <summary>

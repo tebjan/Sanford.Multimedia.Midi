@@ -36,15 +36,30 @@ using System;
 
 namespace Sanford.Multimedia.Midi
 {
-	/// <summary>
-	/// Represents the basic class for all MIDI short messages.
-	/// </summary>
+    public abstract class MidiMessageBase
+    {
+        /// <summary>
+        /// Delta samples when the event should be processed in the next audio buffer.
+        /// Leave at 0 for realtime input to play as fast as possible.
+        /// Set to the desired sample in the next buffer if you play a midi sequence synchronized to the audio callback
+        /// </summary>
+        public int DeltaFrames
+        {
+            get;
+            set;
+        }
+
+    }
+
+    /// <summary>
+    /// Represents the basic class for all MIDI short messages.
+    /// </summary>
     /// <remarks>
     /// MIDI short messages represent all MIDI messages except meta messages
     /// and system exclusive messages. This includes channel messages, system
     /// realtime messages, and system common messages.
     /// </remarks>
-	public abstract class ShortMessage : IMidiMessage
+    public class ShortMessage : MidiMessageBase, IMidiMessage
 	{
         #region ShortMessage Members
 
@@ -68,11 +83,50 @@ namespace Sanford.Multimedia.Midi
 
         protected int msg = 0;
 
+        byte[] message;
+        bool rawMessageBuilt;
+
         #region Methods
 
         public byte[] GetBytes()
         {
-            return BitConverter.GetBytes(msg);
+            return Bytes;
+        }
+
+        public ShortMessage()
+        {
+            //sub classes will fill the msg field
+        }
+
+        public ShortMessage(int message)
+        {
+            this.msg = message;
+        }
+
+        public ShortMessage(byte status, byte data1, byte data2)
+        {
+            this.message = new byte[] { status, data1, data2 };
+            rawMessageBuilt = true;
+            msg = BuildIntMessage(this.message);
+        }
+
+        private static byte[] BuildByteMessage(int intMessage)
+        {
+            unchecked
+            {
+                return new byte[] { (byte)ShortMessage.UnpackStatus(intMessage),
+                    (byte)ShortMessage.UnpackData1(intMessage),
+                    (byte)ShortMessage.UnpackData2(intMessage) };
+            }
+        }
+
+        private static int BuildIntMessage(byte[] message)
+        {
+            var intMessage = 0;
+            intMessage = ShortMessage.PackStatus(intMessage, message[0]);
+            intMessage = ShortMessage.PackData1(intMessage, message[1]);
+            intMessage = ShortMessage.PackData2(intMessage, message[2]);
+            return intMessage;
         }
 
         internal static int PackStatus(int message, int status)
@@ -167,9 +221,25 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
-        public abstract MessageType MessageType
+        public byte[] Bytes
         {
-            get;
+            get
+            {
+                if (!rawMessageBuilt)
+                {
+                    this.message = BuildByteMessage(msg);
+                    rawMessageBuilt = true;
+                }
+                return message;
+            }
+        }
+
+        public virtual MessageType MessageType
+        {
+            get
+            {
+                return MessageType.Short;
+            }
         }
    
         #endregion

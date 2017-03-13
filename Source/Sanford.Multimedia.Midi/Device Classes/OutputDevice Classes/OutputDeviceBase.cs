@@ -124,7 +124,7 @@ namespace Sanford.Multimedia.Midi
             Send(message.Message);
         }
 
-        public virtual void SendRaw(int message)
+        public virtual void SendShort(int message)
         {
             #region Require
 

@@ -76,7 +76,7 @@ namespace Sanford.Multimedia.Midi
             int message = (int)state;
 
             //first send RawMessage
-            OnRawMessage(new RawMessageEventArgs(message));
+            OnShortMessage(new ShortMessageEventArgs(message));
 
             int status = ShortMessage.UnpackStatus(message);
 
@@ -87,6 +87,7 @@ namespace Sanford.Multimedia.Midi
                 cmBuilder.Message = message;
                 cmBuilder.Build();
 
+                OnMessageReceived(cmBuilder.Result);
                 OnChannelMessageReceived(new ChannelMessageEventArgs(cmBuilder.Result));
             }
             else if (status == (int)SysCommonType.MidiTimeCode ||
@@ -97,6 +98,7 @@ namespace Sanford.Multimedia.Midi
                 scBuilder.Message = message;
                 scBuilder.Build();
 
+                OnMessageReceived(scBuilder.Result);
                 OnSysCommonMessageReceived(new SysCommonMessageEventArgs(scBuilder.Result));
             }
             else
@@ -134,6 +136,7 @@ namespace Sanford.Multimedia.Midi
                         break;
                 }
 
+                OnMessageReceived(e.Message);
                 OnSysRealtimeMessageReceived(e);
             }
         }
@@ -159,6 +162,7 @@ namespace Sanford.Multimedia.Midi
 
                         sysExData.Clear();
 
+                        OnMessageReceived(message);
                         OnSysExMessageReceived(new SysExMessageEventArgs(message));
                     }
 

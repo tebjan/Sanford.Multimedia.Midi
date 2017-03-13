@@ -56,7 +56,7 @@ namespace Sanford.Multimedia.Midi
 	/// <summary>
 	/// Represents MIDI system exclusive messages.
 	/// </summary>
-    public sealed class SysExMessage : IMidiMessage, IEnumerable
+    public sealed class SysExMessage : MidiMessageBase, IMidiMessage, IEnumerable
     {
         #region SysExEventMessage Members
 

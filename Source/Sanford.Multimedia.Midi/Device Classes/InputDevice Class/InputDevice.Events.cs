@@ -2,9 +2,17 @@ using System;
 
 namespace Sanford.Multimedia.Midi
 {
+    public delegate void MidiMessageEventHandler(IMidiMessage message);
+
     public partial class InputDevice
     {
-        public event EventHandler<RawMessageEventArgs> RawMessageReceived;
+        /// <summary>
+        /// Occurs when any message was received. The underlying type of the message is as specific as possible.
+        /// Channel, Common, Realtime or SysEx.
+        /// </summary>
+        public event MidiMessageEventHandler MessageReceived;
+
+        public event EventHandler<ShortMessageEventArgs> ShortMessageReceived;
 
         public event EventHandler<ChannelMessageEventArgs> ChannelMessageReceived;
 
@@ -18,15 +26,28 @@ namespace Sanford.Multimedia.Midi
 
         public event EventHandler<InvalidSysExMessageEventArgs> InvalidSysExMessageReceived;
 
-        protected virtual void OnRawMessage(RawMessageEventArgs e)
+        protected virtual void OnShortMessage(ShortMessageEventArgs e)
         {
-            EventHandler<RawMessageEventArgs> handler = RawMessageReceived;
+            EventHandler<ShortMessageEventArgs> handler = ShortMessageReceived;
 
             if (handler != null)
             {
                 context.Post(delegate(object dummy)
                 {
                     handler(this, e);
+                }, null);
+            }
+        }
+
+        protected void OnMessageReceived(IMidiMessage message)
+        {
+            MidiMessageEventHandler handler = MessageReceived;
+
+            if (handler != null)
+            {
+                context.Post(delegate (object dummy)
+                {
+                    handler(message);
                 }, null);
             }
         }
