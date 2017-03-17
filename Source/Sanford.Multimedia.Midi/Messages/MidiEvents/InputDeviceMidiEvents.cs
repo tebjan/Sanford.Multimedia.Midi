@@ -33,7 +33,6 @@ namespace Sanford.Multimedia.Midi
 
 		public void Dispose()
 		{
-			FInDevice.StopRecording();
 			FInDevice.Dispose();
 		}
 
