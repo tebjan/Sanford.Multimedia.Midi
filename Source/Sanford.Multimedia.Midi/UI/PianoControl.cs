@@ -197,24 +197,43 @@ namespace Sanford.Multimedia.Midi.UI
             int n = 0;
             int w = 0;
 
-            while(n < keys.Length)
+            int widthsum = 0; // Sum of white keys' width
+            int LastWhiteWidth = 0; // Last white key width
+            int remainder = Width % whiteKeyCount; // The remaining pixels
+            int counter = 1;
+            double step = remainder != 0 ? whiteKeyCount / (double)remainder : 0; // The ternary operator prevents a division by zero
+
+            while (n < keys.Length)
             {
-                if(KeyTypeTable[keys[n].NoteID] == KeyType.White)
+                if (KeyTypeTable[keys[n].NoteID] == KeyType.White)
                 {
+
                     keys[n].Height = Height;
                     keys[n].Width = whiteKeyWidth;
-                    keys[n].Location = new Point(w * whiteKeyWidth, 0);
+
+                    if (remainder != 0 && counter <= whiteKeyCount && Convert.ToInt32(step * counter) == w)
+                    {
+                        counter++;
+                        keys[n].Width++;
+                    }
+                    // See the Location property of black keys to understand
+                    widthsum += LastWhiteWidth;
+                    LastWhiteWidth = keys[n].Width;
+                    keys[n].Location = new Point(widthsum, 0);
+
                     w++;
-                    n++;
+                    //n++; // Move?
                 }
                 else
                 {
                     keys[n].Height = blackKeyHeight;
                     keys[n].Width = blackKeyWidth;
-                    keys[n].Location = new Point(offset + (w - 1) * whiteKeyWidth);
+                    keys[n].Location = new Point(widthsum + offset);
+                    //keys[n].Location = new Point(widthsum + offset - keys[n - 1].Width); // By this way, eliminates the LastWhiteWidth var
                     keys[n].BringToFront();
-                    n++;
+                    //n++; // Move?
                 }
+                n++; // Moved
             }
         }
 
