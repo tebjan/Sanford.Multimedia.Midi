@@ -75,7 +75,7 @@ namespace Sanford.Multimedia.Midi
 
         private const int StatusMask = ~255;
         protected const int DataMask = ~StatusMask;
-        private const int Data1Mask = ~65280;
+        private const int Data1Mask = ~65280; // 0xff00
         private const int Data2Mask = ~Data1Mask + DataMask;
         private const int Shift = 8;
 
