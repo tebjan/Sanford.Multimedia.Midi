@@ -4,9 +4,9 @@ Sanford.Multimedia.Midi
 This is all source code of the C# MIDI toolkit from CodeProject by Leslie Sanford.
 
 Improvements:
-- Mono compatible ( Windows Only)
 - 64-bit compatible
 - Windows 8 and 10 compatible
+- Mono framework compatible on Windows
 - Does not require additional assemblies
 - Faster midi file reading in Release build
 
