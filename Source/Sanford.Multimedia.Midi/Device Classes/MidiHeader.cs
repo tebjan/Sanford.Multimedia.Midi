@@ -93,7 +93,7 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Reserved; do not use.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst=8)]
         public int[] reservedArray; 
 
         #endregion
