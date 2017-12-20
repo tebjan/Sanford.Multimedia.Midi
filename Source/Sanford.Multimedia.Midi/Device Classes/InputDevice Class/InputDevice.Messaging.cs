@@ -156,7 +156,7 @@ namespace Sanford.Multimedia.Midi
                         sysExData.Add(Marshal.ReadByte(header.data, i));
                     }
 
-                    if (sysExData[0] == 0xF0 && sysExData[sysExData.Count - 1] == 0xF7)
+                    if (sysExData.Count > 1 && sysExData[0] == 0xF0 && sysExData[sysExData.Count - 1] == 0xF7)
                     {
                         SysExMessage message = new SysExMessage(sysExData.ToArray());
 
