@@ -172,6 +172,12 @@ namespace Sanford.Multimedia.Midi.UI
                 base.OnPaint(e);
             }
 
+            protected override void OnResize(EventArgs e)
+            {
+                Invalidate(); // Calls OnPaint while resizing to prevent design errors
+                base.OnResize(e);
+            }
+
             public Color NoteOnColor
             {
                 get

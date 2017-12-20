@@ -96,6 +96,10 @@ namespace Sanford.Multimedia.Midi
                     case MessageType.SystemRealtime:
                         Write((SysRealtimeMessage)e.MidiMessage);
                         break;
+				
+		    case MessageType.Short:
+			Write((ShortMessage)e.MidiMessage);
+			break;
                 }
             }
 
@@ -137,6 +141,11 @@ namespace Sanford.Multimedia.Midi
                 count--;
             }
         }
+	    
+        private void Write(ShortMessage message)
+	{
+		trackData.AddRange(message.GetBytes());
+	}
 
         private void Write(ChannelMessage message)
         {
