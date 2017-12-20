@@ -40,7 +40,7 @@ namespace Sanford.Multimedia.Midi
     /// <summary>
     /// Represents the Windows Multimedia MIDIHDR structure.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Sequential)]
     internal struct MidiHeader
     {
         #region MidiHeader Members
@@ -53,23 +53,23 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Size of the buffer.
         /// </summary>
-        public Int32 bufferLength; 
+        public int bufferLength; 
 
         /// <summary>
         /// Actual amount of data in the buffer. This value should be less than 
         /// or equal to the value given in the dwBufferLength member.
         /// </summary>
-        public Int32 bytesRecorded; 
+        public int bytesRecorded; 
 
         /// <summary>
         /// Custom user data.
         /// </summary>
-        public IntPtr user; 
+        public int user; 
 
         /// <summary>
         /// Flags giving information about the buffer.
         /// </summary>
-        public Int32 flags; 
+        public int flags; 
 
         /// <summary>
         /// Reserved; do not use.
@@ -79,7 +79,7 @@ namespace Sanford.Multimedia.Midi
         /// <summary>
         /// Reserved; do not use.
         /// </summary>
-        public IntPtr reserved; 
+        public int reserved; 
 
         /// <summary>
         /// Offset into the buffer when a callback is performed. (This 
@@ -88,13 +88,13 @@ namespace Sanford.Multimedia.Midi
         /// This offset enables an application to determine which 
         /// event caused the callback. 
         /// </summary>
-        public Int32 offset; 
+        public int offset; 
 
         /// <summary>
         /// Reserved; do not use.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public IntPtr[] reservedArray; 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst=4)]
+        public int[] reservedArray; 
 
         #endregion
     }
