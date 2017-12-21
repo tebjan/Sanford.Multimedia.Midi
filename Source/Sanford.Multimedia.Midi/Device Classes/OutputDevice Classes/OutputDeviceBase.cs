@@ -61,7 +61,7 @@ namespace Sanford.Multimedia.Midi
         protected static extern int midiOutLongMsg(IntPtr handle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
-        [DllImport("winmm.dll")]
+        [DllImport("winmm.dll", CharSet = CharSet.Auto)]
         protected static extern int midiOutGetDevCaps(IntPtr deviceID,
             ref MidiOutCaps caps, int sizeOfMidiOutCaps);
 
