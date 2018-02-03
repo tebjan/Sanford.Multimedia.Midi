@@ -244,7 +244,7 @@ namespace Sanford.Multimedia.Midi
             else
             {
                 Debug.Assert(SequenceType == SequenceType.Ppqn);
-                Debug.Assert(Division % PpqnClock.PpqnMinValue == 0);
+                Debug.Assert(Division >= PpqnClock.PpqnMinValue);
             }
         }
 
@@ -345,10 +345,10 @@ namespace Sanford.Multimedia.Midi
                 }
                 else 
                 {
-                    if(value % PpqnClock.PpqnMinValue != 0)
+                    if(value < PpqnClock.PpqnMinValue)
                     {
-                        throw new ArgumentException(
-                            "Invalid pulses per quarter note value.");
+                        throw new ArgumentOutOfRangeException("Ppqn", value,
+                            "Pulses per quarter note is smaller than 24.");
                     }
                     else
                     {

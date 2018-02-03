@@ -193,10 +193,10 @@ namespace Sanford.Multimedia.Midi
             {
                 #region Require
 
-                if(value % PpqnClock.PpqnMinValue != 0)
+                if(value < PpqnClock.PpqnMinValue)
                 {
-                    throw new ArgumentException(
-                        "Invalid pulses per quarter note value.");
+                    throw new ArgumentOutOfRangeException("Ppqn", value,
+                         "Pulses per quarter note is smaller than 24.");
                 }
 
                 #endregion

@@ -207,12 +207,7 @@ namespace Sanford.Multimedia.Midi
                 if(value < PpqnMinValue)
                 {
                     throw new ArgumentOutOfRangeException("Ppqn", value,
-                        "Pulses per quarter note out of range.");
-                }
-                else if(value % PpqnMinValue != 0)
-                {
-                    throw new ArgumentException(
-                        "Pulses per quarter note is not a multiple of 24.");
+                        "Pulses per quarter note is smaller than 24.");
                 }
 
                 #endregion

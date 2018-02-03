@@ -529,9 +529,10 @@ namespace Sanford.Multimedia.Midi
                 {
                     throw new ObjectDisposedException("OutputStream");
                 }
-                else if((value % PpqnClock.PpqnMinValue) != 0)
+                else if(value < PpqnClock.PpqnMinValue)
                 {
-                    throw new ArgumentException();
+                    throw new ArgumentOutOfRangeException("Ppqn", value,
+                        "Pulses per quarter note is smaller than 24.");
                 }
 
                 #endregion
