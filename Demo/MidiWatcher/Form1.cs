@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Sanford.Multimedia;
 using Sanford.Multimedia.Midi;
+using System.Diagnostics;
 
 namespace MidiWatcher
 {
@@ -71,7 +72,7 @@ namespace MidiWatcher
             channelListBox.Items.Clear();
 
             try
-            {
+            {               
                 inDevice.StartRecording();
             }
             catch(Exception ex)
@@ -141,15 +142,46 @@ namespace MidiWatcher
             }, null);
         }
 
+        Stopwatch FWatch = Stopwatch.StartNew();
+        double FLastMillis;
+        double FDiff;
+        double FDiffTimeStamp;
+        int counter;
+        int FLastTimestamp;
         private void HandleSysRealtimeMessageReceived(object sender, SysRealtimeMessageEventArgs e)
         {
+            counter++;
+            if (counter % 24 == 0)
+            {
+                var millis = FWatch.Elapsed.TotalMilliseconds;
+                FDiff = 60000 / (millis - FLastMillis);
+                FLastMillis = millis;
+
+                var timestamp = e.Message.Timestamp;
+                FDiffTimeStamp = 60000.0 / (timestamp - FLastTimestamp);
+                FLastTimestamp = timestamp;
+            }
+           
             context.Post(delegate(object dummy)
             {
                 sysRealtimeListBox.Items.Add(
                     e.Message.SysRealtimeType.ToString());
 
+                sysRealtimeListBox.Items.Add("BPM from stopwatch: " + FDiff.ToString("F4"));
+                sysRealtimeListBox.Items.Add("BPM from driver timestamp: " + FDiffTimeStamp.ToString("F4"));
+
                 sysRealtimeListBox.SelectedIndex = sysRealtimeListBox.Items.Count - 1;
             }, null);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            inDevice.PostDriverCallbackToDelegateQueue = checkBox1.Checked;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            inDevice.PostEventsOnCreationContext = checkBox2.Checked;
         }
     }
 }

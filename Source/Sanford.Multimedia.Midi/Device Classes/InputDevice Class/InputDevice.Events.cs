@@ -7,6 +7,19 @@ namespace Sanford.Multimedia.Midi
     public partial class InputDevice
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the midi events should be posted on the same synchronization context as the device constructor was called.
+        /// Default is <c>true</c>. If set to <c>false</c> the events are fired on the driver callback or the thread of the driver callback delegate queue, depending on the PostDriverCallbackToDelegateQueue property.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if midi events should be posted on the same synchronization context as the device constructor was called; otherwise, <c>false</c>.
+        /// </value>
+        public bool PostEventsOnCreationContext
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Occurs when any message was received. The underlying type of the message is as specific as possible.
         /// Channel, Common, Realtime or SysEx.
         /// </summary>
@@ -32,10 +45,17 @@ namespace Sanford.Multimedia.Midi
 
             if (handler != null)
             {
-                context.Post(delegate(object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                            {
+                                handler(this, e);
+                            }, null); 
+                }
+                else
                 {
                     handler(this, e);
-                }, null);
+                }
             }
         }
 
@@ -45,10 +65,17 @@ namespace Sanford.Multimedia.Midi
 
             if (handler != null)
             {
-                context.Post(delegate (object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                    {
+                        handler(message);
+                    }, null);
+                }
+                else
                 {
                     handler(message);
-                }, null);
+                }
             }
         }
 
@@ -58,10 +85,17 @@ namespace Sanford.Multimedia.Midi
 
             if(handler != null)
             {
-                context.Post(delegate(object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                    {
+                        handler(this, e);
+                    }, null);
+                }
+                else
                 {
                     handler(this, e);
-                }, null);
+                }
             }
         }
 
@@ -71,10 +105,17 @@ namespace Sanford.Multimedia.Midi
 
             if(handler != null)
             {
-                context.Post(delegate(object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                    {
+                        handler(this, e);
+                    }, null);
+                }
+                else
                 {
                     handler(this, e);
-                }, null);
+                }
             }
         }
 
@@ -84,10 +125,17 @@ namespace Sanford.Multimedia.Midi
 
             if(handler != null)
             {
-                context.Post(delegate(object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                    {
+                        handler(this, e);
+                    }, null);
+                }
+                else
                 {
                     handler(this, e);
-                }, null);
+                }
             }
         }
 
@@ -97,10 +145,17 @@ namespace Sanford.Multimedia.Midi
 
             if(handler != null)
             {
-                context.Post(delegate(object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                    {
+                        handler(this, e);
+                    }, null);
+                }
+                else
                 {
                     handler(this, e);
-                }, null);
+                }
             }
         }
 
@@ -110,10 +165,17 @@ namespace Sanford.Multimedia.Midi
 
             if(handler != null)
             {
-                context.Post(delegate(object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                    {
+                        handler(this, e);
+                    }, null);
+                }
+                else
                 {
                     handler(this, e);
-                }, null);
+                }
             }
         }
 
@@ -123,10 +185,17 @@ namespace Sanford.Multimedia.Midi
 
             if(handler != null)
             {
-                context.Post(delegate(object dummy)
+                if (PostEventsOnCreationContext)
+                {
+                    context.Post(delegate (object dummy)
+                    {
+                        handler(this, e);
+                    }, null);
+                }
+                else
                 {
                     handler(this, e);
-                }, null);
+                }
             }
         }
     }

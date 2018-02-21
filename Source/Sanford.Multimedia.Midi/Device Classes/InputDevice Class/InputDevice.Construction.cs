@@ -37,40 +37,43 @@ using System.Threading;
 using Sanford.Threading;
 
 namespace Sanford.Multimedia.Midi
-   {
-   public partial class InputDevice : MidiDevice
-      {
-      #region Construction
+{
+    public partial class InputDevice : MidiDevice
+    {
+        #region Construction
 
-      /// <summary>
-      /// Initializes a new instance of the InputDevice class with the 
-      /// specified device ID.
-      /// </summary>
-      public InputDevice(int deviceID)
-         : base(deviceID)
-         {
-         midiInProc = HandleMessage;
+        /// <summary>
+        /// Initializes a new instance of the InputDevice class with the 
+        /// specified device ID.
+        /// </summary>
+        public InputDevice(int deviceID, bool postEventsOnCreationContext = true, bool postDriverCallbackToDelegateQueue = true)
+           : base(deviceID)
+        {
+            midiInProc = HandleMessage;
 
-         delegateQueue = new DelegateQueue();
-         int result = midiInOpen(out handle, deviceID, midiInProc, IntPtr.Zero, CALLBACK_FUNCTION);
+            delegateQueue = new DelegateQueue();
+            int result = midiInOpen(out handle, deviceID, midiInProc, IntPtr.Zero, CALLBACK_FUNCTION);
 
-         System.Diagnostics.Debug.WriteLine("MidiIn handle:" + handle.ToInt64());
+            System.Diagnostics.Debug.WriteLine("MidiIn handle:" + handle.ToInt64());
 
-         if(result != MidiDeviceException.MMSYSERR_NOERROR)
+            if (result != MidiDeviceException.MMSYSERR_NOERROR)
             {
-            throw new InputDeviceException(result);
+                throw new InputDeviceException(result);
             }
-         }
 
-      ~InputDevice()
-         {
-         if(!IsDisposed)
+            PostEventsOnCreationContext = postEventsOnCreationContext;
+            PostDriverCallbackToDelegateQueue = postDriverCallbackToDelegateQueue;
+        }
+
+        ~InputDevice()
+        {
+            if (!IsDisposed)
             {
-            midiInReset(handle);
-            midiInClose(handle);
+                midiInReset(handle);
+                midiInClose(handle);
             }
-         }
+        }
 
-      #endregion
-      }
-   }
+        #endregion
+    }
+}

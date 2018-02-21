@@ -33,11 +33,13 @@ namespace MidiWatcher
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.sysExGroupBox = new System.Windows.Forms.GroupBox();
+            this.sysExRichTextBox = new System.Windows.Forms.RichTextBox();
             this.systemCommonGroupBox = new System.Windows.Forms.GroupBox();
             this.sysCommonListBox = new System.Windows.Forms.ListBox();
             this.sysRealtimeGroupBox = new System.Windows.Forms.GroupBox();
             this.sysRealtimeListBox = new System.Windows.Forms.ListBox();
-            this.sysExRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.channelMessageGroupBox.SuspendLayout();
             this.sysExGroupBox.SuspendLayout();
             this.systemCommonGroupBox.SuspendLayout();
@@ -92,6 +94,14 @@ namespace MidiWatcher
             this.sysExGroupBox.TabStop = false;
             this.sysExGroupBox.Text = "SysEx Messages";
             // 
+            // sysExRichTextBox
+            // 
+            this.sysExRichTextBox.Location = new System.Drawing.Point(6, 19);
+            this.sysExRichTextBox.Name = "sysExRichTextBox";
+            this.sysExRichTextBox.Size = new System.Drawing.Size(355, 147);
+            this.sysExRichTextBox.TabIndex = 7;
+            this.sysExRichTextBox.Text = "";
+            // 
             // systemCommonGroupBox
             // 
             this.systemCommonGroupBox.Controls.Add(this.sysCommonListBox);
@@ -128,19 +138,39 @@ namespace MidiWatcher
             this.sysRealtimeListBox.Size = new System.Drawing.Size(258, 147);
             this.sysRealtimeListBox.TabIndex = 0;
             // 
-            // sysExRichTextBox
+            // checkBox1
             // 
-            this.sysExRichTextBox.Location = new System.Drawing.Point(6, 19);
-            this.sysExRichTextBox.Name = "sysExRichTextBox";
-            this.sysExRichTextBox.Size = new System.Drawing.Size(355, 147);
-            this.sysExRichTextBox.TabIndex = 7;
-            this.sysExRichTextBox.Text = "";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(574, 281);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(87, 17);
+            this.checkBox1.TabIndex = 7;
+            this.checkBox1.Text = "Input Thread";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(574, 304);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(93, 17);
+            this.checkBox2.TabIndex = 8;
+            this.checkBox2.Text = "Event Context";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(667, 382);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.sysRealtimeGroupBox);
             this.Controls.Add(this.systemCommonGroupBox);
             this.Controls.Add(this.sysExGroupBox);
@@ -154,6 +184,7 @@ namespace MidiWatcher
             this.systemCommonGroupBox.ResumeLayout(false);
             this.sysRealtimeGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -169,6 +200,8 @@ namespace MidiWatcher
         private System.Windows.Forms.GroupBox sysRealtimeGroupBox;
         private System.Windows.Forms.ListBox sysRealtimeListBox;
         private System.Windows.Forms.RichTextBox sysExRichTextBox;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

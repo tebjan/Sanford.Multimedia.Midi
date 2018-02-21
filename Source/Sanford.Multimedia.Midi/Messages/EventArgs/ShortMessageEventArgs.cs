@@ -16,9 +16,10 @@ namespace Sanford.Multimedia.Midi
             this.message = message;
         }
 
-        public ShortMessageEventArgs(int message)
+        public ShortMessageEventArgs(int message, int timestamp = 0)
         {
             this.message = new ShortMessage(message);
+            this.message.Timestamp = timestamp;
         }
 
         public ShortMessageEventArgs(byte status, byte data1, byte data2)

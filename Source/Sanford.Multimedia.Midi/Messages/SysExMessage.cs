@@ -170,6 +170,18 @@ namespace Sanford.Multimedia.Midi
         #region Properties
 
         /// <summary>
+        /// Gets the timestamp of the midi input driver in milliseconds since the midi input driver was started.
+        /// </summary>
+        /// <value>
+        /// The timestamp in milliseconds since the midi input driver was started.
+        /// </value>
+        public int Timestamp
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets the element at the specified index.
         /// </summary>
         /// <exception cref="ArgumentOutOfRangeException">

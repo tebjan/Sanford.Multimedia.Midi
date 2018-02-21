@@ -39,10 +39,39 @@ using Sanford.Multimedia;
 
 namespace Sanford.Multimedia.Midi
 {
+    internal struct MidiInParams
+    {
+        public readonly IntPtr Param1;
+        public readonly IntPtr Param2;
+
+        public MidiInParams(IntPtr param1, IntPtr param2)
+        {
+            Param1 = param1;
+            Param2 = param2;
+        }
+    }
+
     public partial class InputDevice : MidiDevice
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the midi input driver callback should be posted on a delegate queue with its own thread.
+        /// Default is <c>true</c>. If set to <c>false</c> the driver callback directly calls the events for lowest possible latency.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the midi input driver callback should be posted on a delegate queue with its own thread; otherwise, <c>false</c>.
+        /// </value>
+        public bool PostDriverCallbackToDelegateQueue
+        {
+            get;
+            set;
+        }
+
+        int FLastParam2;
+
         private void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
+            var param = new MidiInParams(param1, param2);
+
             if (msg == MIM_OPEN)
             {
             }
@@ -51,32 +80,50 @@ namespace Sanford.Multimedia.Midi
             }
             else if (msg == MIM_DATA)
             {
-                delegateQueue.Post(HandleShortMessage, param1.ToInt32());
+                if (PostDriverCallbackToDelegateQueue)
+                    delegateQueue.Post(HandleShortMessage, param);
+                else
+                    HandleShortMessage(param);
             }
             else if (msg == MIM_MOREDATA)
             {
-                delegateQueue.Post(HandleShortMessage, param1.ToInt32());
+                if (PostDriverCallbackToDelegateQueue)
+                    delegateQueue.Post(HandleShortMessage, param);
+                else
+                    HandleShortMessage(param);
             }
             else if (msg == MIM_LONGDATA)
             {
-                delegateQueue.Post(HandleSysExMessage, param1);
+                if (PostDriverCallbackToDelegateQueue)
+                    delegateQueue.Post(HandleSysExMessage, param);
+                else
+                    HandleSysExMessage(param);
             }
             else if (msg == MIM_ERROR)
             {
-                delegateQueue.Post(HandleInvalidShortMessage, param1.ToInt32());
+                if (PostDriverCallbackToDelegateQueue)
+                    delegateQueue.Post(HandleInvalidShortMessage, param);
+                else
+                    HandleInvalidShortMessage(param);
             }
             else if (msg == MIM_LONGERROR)
             {
-                delegateQueue.Post(HandleInvalidSysExMessage, param1);
+                if (PostDriverCallbackToDelegateQueue)
+                    delegateQueue.Post(HandleInvalidSysExMessage, param);
+                else
+                    HandleInvalidSysExMessage(param);
             }
         }
 
         private void HandleShortMessage(object state)
         {
-            int message = (int)state;
+
+            var param = (MidiInParams)state;
+            int message = param.Param1.ToInt32();
+            int timestamp = param.Param2.ToInt32();
 
             //first send RawMessage
-            OnShortMessage(new ShortMessageEventArgs(message));
+            OnShortMessage(new ShortMessageEventArgs(message, timestamp));
 
             int status = ShortMessage.UnpackStatus(message);
 
@@ -87,6 +134,7 @@ namespace Sanford.Multimedia.Midi
                 cmBuilder.Message = message;
                 cmBuilder.Build();
 
+                cmBuilder.Result.Timestamp = timestamp;
                 OnMessageReceived(cmBuilder.Result);
                 OnChannelMessageReceived(new ChannelMessageEventArgs(cmBuilder.Result));
             }
@@ -98,6 +146,7 @@ namespace Sanford.Multimedia.Midi
                 scBuilder.Message = message;
                 scBuilder.Build();
 
+                scBuilder.Result.Timestamp = timestamp;
                 OnMessageReceived(scBuilder.Result);
                 OnSysCommonMessageReceived(new SysCommonMessageEventArgs(scBuilder.Result));
             }
@@ -136,6 +185,7 @@ namespace Sanford.Multimedia.Midi
                         break;
                 }
 
+                e.Message.Timestamp = timestamp;
                 OnMessageReceived(e.Message);
                 OnSysRealtimeMessageReceived(e);
             }
@@ -145,7 +195,8 @@ namespace Sanford.Multimedia.Midi
         {
             lock (lockObject)
             {
-                IntPtr headerPtr = (IntPtr)state;
+                var param = (MidiInParams)state;
+                IntPtr headerPtr = param.Param1;
 
                 MidiHeader header = (MidiHeader)Marshal.PtrToStructure(headerPtr, typeof(MidiHeader));
 
@@ -159,6 +210,7 @@ namespace Sanford.Multimedia.Midi
                     if (sysExData.Count > 1 && sysExData[0] == 0xF0 && sysExData[sysExData.Count - 1] == 0xF7)
                     {
                         SysExMessage message = new SysExMessage(sysExData.ToArray());
+                        message.Timestamp = param.Param2.ToInt32();
 
                         sysExData.Clear();
 
@@ -182,14 +234,16 @@ namespace Sanford.Multimedia.Midi
 
         private void HandleInvalidShortMessage(object state)
         {
-            OnInvalidShortMessageReceived(new InvalidShortMessageEventArgs((int)state));
+            var param = (MidiInParams)state;
+            OnInvalidShortMessageReceived(new InvalidShortMessageEventArgs(param.Param1.ToInt32()));
         }
 
         private void HandleInvalidSysExMessage(object state)
         {
             lock (lockObject)
             {
-                IntPtr headerPtr = (IntPtr)state;
+                var param = (MidiInParams)state;
+                IntPtr headerPtr = param.Param1;
 
                 MidiHeader header = (MidiHeader)Marshal.PtrToStructure(headerPtr, typeof(MidiHeader));
 

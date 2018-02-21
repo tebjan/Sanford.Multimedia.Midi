@@ -290,7 +290,7 @@ namespace SequencerDemo
         {
             if(!scrolling)
             {
-                positionHScrollBar.Value = sequencer1.Position;
+                positionHScrollBar.Value = Math.Min(sequencer1.Position, positionHScrollBar.Maximum);
             }
         }        
     }
