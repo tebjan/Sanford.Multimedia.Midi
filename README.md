@@ -12,7 +12,7 @@ Improvements:
 
 Also avaliable on Nuget.org
 
-PM> Install-Package Sanford.Multimedia.Midi
+    PM> Install-Package Sanford.Multimedia.Midi
 
 If you have any improvement or fix to this library, please don't hesitate to make a fork and open a pull request.
 
