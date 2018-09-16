@@ -258,7 +258,7 @@ namespace Sanford.Multimedia.Midi
             {
                 #region Require
 
-                if(value < 0 || value > 3)
+                if(value < 0 || value > 2)
                 {
                     throw new ArgumentOutOfRangeException("Format", value,
                         "MIDI file format out of range.");
