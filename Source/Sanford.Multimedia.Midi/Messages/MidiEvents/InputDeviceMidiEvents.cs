@@ -3,29 +3,41 @@ using System;
 
 namespace Sanford.Multimedia.Midi
 {
-	/// <summary>
-	/// MidiSignal provides all midi events from an input device
-	/// </summary>
-	public class InputDeviceMidiEvents : MidiEvents
-	{
-		readonly InputDevice FInDevice;
+    /// <summary>
+    /// MidiSignal provides all midi events from an input device
+    /// </summary>
+    public class InputDeviceMidiEvents : MidiEvents
+    {
+        readonly InputDevice FInDevice;
 
-		public int DeviceID {
-			get {
-				if (FInDevice != null) {
-					return FInDevice.DeviceID;
-				}
-				else {
-					return -1;
-				}
-			}
-		}
+        public InputDevice Device
+        {
+            get
+            {
+                return FInDevice;
+            }
+        }
 
-		/// <summary>
-		/// Create Midisignal with an input device which fires the events
-		/// </summary>
-		/// <param name="inDevice"></param>
-		public InputDeviceMidiEvents(InputDevice inDevice)
+        public int DeviceID
+        {
+            get
+            {
+                if (FInDevice != null)
+                {
+                    return FInDevice.DeviceID;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Create Midisignal with an input device which fires the events
+        /// </summary>
+        /// <param name="inDevice"></param>
+        public InputDeviceMidiEvents(InputDevice inDevice)
 		{
 			FInDevice = inDevice;
 			FInDevice.StartRecording();
