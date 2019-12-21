@@ -4,13 +4,14 @@ using System.Text;
 
 namespace Sanford.Multimedia.Midi
 {
-    public class ChannelMessageEventArgs : EventArgs
+    public class ChannelMessageEventArgs : MidiEventArgs
     {
         private ChannelMessage message;
 
-        public ChannelMessageEventArgs(ChannelMessage message)
+        public ChannelMessageEventArgs(ChannelMessage message, int absoluteTicks = -1)
         {
             this.message = message;
+            this.AbsoluteTicks = absoluteTicks;
         }
 
         public ChannelMessage Message

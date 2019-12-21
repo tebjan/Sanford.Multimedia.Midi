@@ -64,9 +64,11 @@ namespace Sanford.Multimedia.Midi
         /// <param name="message">
         /// The IMidiMessage to dispatch.
         /// </param>
-        public void Dispatch(IMidiMessage message)
+        public void Dispatch(MidiEvent evt, Track track)
         {
             #region Require
+
+            var message = evt.MidiMessage;
 
             if(message == null)
             {
@@ -78,50 +80,50 @@ namespace Sanford.Multimedia.Midi
             switch(message.MessageType)
             {
                 case MessageType.Channel:
-                    OnChannelMessageDispatched(new ChannelMessageEventArgs((ChannelMessage)message));
+                    OnChannelMessageDispatched(new ChannelMessageEventArgs((ChannelMessage)message, evt.AbsoluteTicks), track);
                     break;
 
                 case MessageType.SystemExclusive:
-                    OnSysExMessageDispatched(new SysExMessageEventArgs((SysExMessage)message));
+                    OnSysExMessageDispatched(new SysExMessageEventArgs((SysExMessage)message, evt.AbsoluteTicks), track);
                     break;
 
                 case MessageType.Meta:
-                    OnMetaMessageDispatched(new MetaMessageEventArgs((MetaMessage)message));
+                    OnMetaMessageDispatched(new MetaMessageEventArgs((MetaMessage)message, evt.AbsoluteTicks), track);
                     break;
 
                 case MessageType.SystemCommon:
-                    OnSysCommonMessageDispatched(new SysCommonMessageEventArgs((SysCommonMessage)message));
+                    OnSysCommonMessageDispatched(new SysCommonMessageEventArgs((SysCommonMessage)message, evt.AbsoluteTicks), track);
                     break;
 
                 case MessageType.SystemRealtime:
                     switch(((SysRealtimeMessage)message).SysRealtimeType)
                     {
                         case SysRealtimeType.ActiveSense:
-                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.ActiveSense);
+                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.ActiveSense, track);
                             break;
 
                         case SysRealtimeType.Clock:
-                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Clock);
+                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Clock, track);
                             break;
 
                         case SysRealtimeType.Continue:
-                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Continue);
+                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Continue, track);
                             break;
 
                         case SysRealtimeType.Reset:
-                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Reset);
+                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Reset, track);
                             break;
 
                         case SysRealtimeType.Start:
-                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Start);
+                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Start, track);
                             break;
 
                         case SysRealtimeType.Stop:
-                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Stop);
+                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Stop, track);
                             break;
 
                         case SysRealtimeType.Tick:
-                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Tick);
+                            OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs.Tick, track);
                             break;
                     }
 
@@ -129,53 +131,53 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
-        protected virtual void OnChannelMessageDispatched(ChannelMessageEventArgs e)
+        protected virtual void OnChannelMessageDispatched(ChannelMessageEventArgs e, Track track)
         {
             EventHandler<ChannelMessageEventArgs> handler = ChannelMessageDispatched;
 
             if(handler != null)
             {
-                handler(this, e);
+                handler(track, e);
             }
         }
 
-        protected virtual void OnSysExMessageDispatched(SysExMessageEventArgs e)
+        protected virtual void OnSysExMessageDispatched(SysExMessageEventArgs e, Track track)
         {
             EventHandler<SysExMessageEventArgs> handler = SysExMessageDispatched;
 
             if(handler != null)
             {
-                handler(this, e);
+                handler(track, e);
             }
         }
 
-        protected virtual void OnSysCommonMessageDispatched(SysCommonMessageEventArgs e)
+        protected virtual void OnSysCommonMessageDispatched(SysCommonMessageEventArgs e, Track track)
         {
             EventHandler<SysCommonMessageEventArgs> handler = SysCommonMessageDispatched;
 
             if(handler != null)
             {
-                handler(this, e);
+                handler(track, e);
             }
         }
 
-        protected virtual void OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs e)
+        protected virtual void OnSysRealtimeMessageDispatched(SysRealtimeMessageEventArgs e, Track track)
         {
             EventHandler<SysRealtimeMessageEventArgs> handler = SysRealtimeMessageDispatched;
 
             if(handler != null)
             {
-                handler(this, e);
+                handler(track, e);
             }
         }
 
-        protected virtual void OnMetaMessageDispatched(MetaMessageEventArgs e)
+        protected virtual void OnMetaMessageDispatched(MetaMessageEventArgs e, Track track)
         {
             EventHandler<MetaMessageEventArgs> handler = MetaMessageDispatched;
 
             if(handler != null)
             {
-                handler(this, e);
+                handler(track, e);
             }
         }
 

@@ -4,13 +4,14 @@ using System.Text;
 
 namespace Sanford.Multimedia.Midi
 {
-    public class InvalidShortMessageEventArgs : EventArgs
+    public class InvalidShortMessageEventArgs : MidiEventArgs
     {
         private int message;
 
-        public InvalidShortMessageEventArgs(int message)
+        public InvalidShortMessageEventArgs(int message, int absoluteTicks = -1)
         {
             this.message = message;
+            this.AbsoluteTicks = absoluteTicks;
         }
 
         public int Message
