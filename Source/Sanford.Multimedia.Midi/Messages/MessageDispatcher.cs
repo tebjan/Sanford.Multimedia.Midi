@@ -84,15 +84,15 @@ namespace Sanford.Multimedia.Midi
                     break;
 
                 case MessageType.SystemExclusive:
-                    OnSysExMessageDispatched(new SysExMessageEventArgs((SysExMessage)message), track);
+                    OnSysExMessageDispatched(new SysExMessageEventArgs((SysExMessage)message, evt.AbsoluteTicks), track);
                     break;
 
                 case MessageType.Meta:
-                    OnMetaMessageDispatched(new MetaMessageEventArgs((MetaMessage)message), track);
+                    OnMetaMessageDispatched(new MetaMessageEventArgs((MetaMessage)message, evt.AbsoluteTicks), track);
                     break;
 
                 case MessageType.SystemCommon:
-                    OnSysCommonMessageDispatched(new SysCommonMessageEventArgs((SysCommonMessage)message), track);
+                    OnSysCommonMessageDispatched(new SysCommonMessageEventArgs((SysCommonMessage)message, evt.AbsoluteTicks), track);
                     break;
 
                 case MessageType.SystemRealtime:
