@@ -44,21 +44,21 @@ namespace Sanford.Multimedia.Midi
     public abstract class OutputDeviceBase : MidiDevice
     {
         [DllImport("winmm.dll")]
-        protected static extern int midiOutReset(IntPtr handle);
+        protected static extern int midiOutReset(IntPtr DeviceHandle);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutShortMsg(IntPtr handle, int message);
+        protected static extern int midiOutShortMsg(IntPtr DeviceHandle, int message);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutPrepareHeader(IntPtr handle,
+        protected static extern int midiOutPrepareHeader(IntPtr DeviceHandle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutUnprepareHeader(IntPtr handle,
+        protected static extern int midiOutUnprepareHeader(IntPtr DeviceHandle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        protected static extern int midiOutLongMsg(IntPtr handle,
+        protected static extern int midiOutLongMsg(IntPtr DeviceHandle,
             IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
@@ -89,7 +89,7 @@ namespace Sanford.Multimedia.Midi
         private MidiHeaderBuilder headerBuilder = new MidiHeaderBuilder();
 
         // The device handle.
-        protected IntPtr handle = IntPtr.Zero;        
+        protected IntPtr DeviceHandle = IntPtr.Zero;        
 
         public OutputDeviceBase(int deviceID) : base(deviceID)
         {
@@ -342,7 +342,7 @@ namespace Sanford.Multimedia.Midi
         {
             get
             {
-                return handle;
+                return DeviceHandle;
             }
         }
 

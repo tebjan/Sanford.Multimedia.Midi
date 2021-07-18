@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Source\Sanford.Multimedia.Midi.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DeviceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="InputDeviceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="OutputDeviceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PianoControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="PianoControl.PianoKey.cs" />
+    <Compile Update="PianoControlDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>

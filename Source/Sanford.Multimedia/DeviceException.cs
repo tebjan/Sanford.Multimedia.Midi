@@ -36,44 +36,76 @@ using System;
 
 namespace Sanford.Multimedia
 {
+    /// <summary>
+    /// Refers the System.ApplicationException as DeviceException.
+    /// </summary>
     public abstract class DeviceException : ApplicationException
     {
         #region Error Codes
-
-        public const int MMSYSERR_NOERROR = 0;  /* no error */
-        public const int MMSYSERR_ERROR = 1;  /* unspecified error */
-        public const int MMSYSERR_BADDEVICEID = 2;  /* device ID out of range */
-        public const int MMSYSERR_NOTENABLED = 3;  /* driver failed enable */
-        public const int MMSYSERR_ALLOCATED = 4;  /* device already allocated */
-        public const int MMSYSERR_INVALHANDLE = 5;  /* device handle is invalid */
-        public const int MMSYSERR_NODRIVER = 6;  /* no device driver present */
-        public const int MMSYSERR_NOMEM = 7;  /* memory allocation error */
-        public const int MMSYSERR_NOTSUPPORTED = 8;  /* function isn't supported */
-        public const int MMSYSERR_BADERRNUM = 9;  /* error value out of range */
-        public const int MMSYSERR_INVALFLAG = 10; /* invalid flag passed */
-        public const int MMSYSERR_INVALPARAM = 11; /* invalid parameter passed */
-        public const int MMSYSERR_HANDLEBUSY = 12; /* handle being used */
-                                                    /* simultaneously on another */
-                                                    /* thread (eg callback) */
-        public const int MMSYSERR_INVALIDALIAS = 13; /* specified alias not found */
-        public const int MMSYSERR_BADDB = 14; /* bad registry database */
-        public const int MMSYSERR_KEYNOTFOUND = 15; /* registry key not found */
-        public const int MMSYSERR_READERROR = 16; /* registry read error */
-        public const int MMSYSERR_WRITEERROR = 17; /* registry write error */
-        public const int MMSYSERR_DELETEERROR = 18; /* registry delete error */
-        public const int MMSYSERR_VALNOTFOUND = 19; /* registry value not found */
-        public const int MMSYSERR_NODRIVERCB = 20; /* driver does not call DriverCallback */
+        /// <summary>No error.</summary>
+        public const int MMSYSERR_NOERROR = 0;
+        /// <summary>Unspecified error.</summary>
+        public const int MMSYSERR_ERROR = 1;
+        /// <summary>Device ID out of range.</summary>
+        public const int MMSYSERR_BADDEVICEID = 2;
+        /// <summary>Driver failed enable.</summary>
+        public const int MMSYSERR_NOTENABLED = 3;
+        /// <summary>Device already allocated.</summary>
+        public const int MMSYSERR_ALLOCATED = 4;
+        /// <summary>Device handle is invalid.</summary>
+        public const int MMSYSERR_INVALHANDLE = 5;
+        /// <summary>No device driver present.</summary>
+        public const int MMSYSERR_NODRIVER = 6;
+        /// <summary>Memory allocation error.</summary>
+        public const int MMSYSERR_NOMEM = 7;
+        /// <summary>Function isn't supported.</summary>
+        public const int MMSYSERR_NOTSUPPORTED = 8;
+        /// <summary>Error value out of range.</summary>
+        public const int MMSYSERR_BADERRNUM = 9;
+        /// <summary>Invalid flag passed.</summary>
+        public const int MMSYSERR_INVALFLAG = 10;
+        /// <summary>Invalid parameter passed.</summary>
+        public const int MMSYSERR_INVALPARAM = 11;
+        /// <summary>
+        /// Handle being used.<br></br>
+        /// Simultaneously on another.<br></br>
+        /// Thread (eg callback).<br></br>
+        /// </summary>
+        public const int MMSYSERR_HANDLEBUSY = 12;
+        /// <summary>Specified alias not found.</summary>
+        public const int MMSYSERR_INVALIDALIAS = 13;
+        /// <summary>Bad registry database.</summary>
+        public const int MMSYSERR_BADDB = 14;
+        /// <summary>Registry key not found.</summary>
+        public const int MMSYSERR_KEYNOTFOUND = 15;
+        /// <summary>Registry read error.</summary>
+        public const int MMSYSERR_READERROR = 16;
+        /// <summary>Registry write error.</summary>
+        public const int MMSYSERR_WRITEERROR = 17;
+        /// <summary>Registry delete error.</summary>
+        public const int MMSYSERR_DELETEERROR = 18;
+        /// <summary>Registry value not found.</summary>
+        public const int MMSYSERR_VALNOTFOUND = 19;
+        /// <summary>Driver does not call DriverCallback.</summary>
+        public const int MMSYSERR_NODRIVERCB = 20; 
+        /// <summary>Last error.</summary>
         public const int MMSYSERR_LASTERROR = 20;
 
         #endregion
 
         private int errorCode;
 
+        /// <summary>
+        /// Calls the Device Exception error code.
+        /// </summary>
         public DeviceException(int errorCode)
         {
             this.errorCode = errorCode;
         }
 
+        /// <summary>
+        /// Public integer for the error code.
+        /// </summary>
         public int ErrorCode
         {
             get

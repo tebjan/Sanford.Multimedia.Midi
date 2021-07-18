@@ -44,29 +44,29 @@ namespace Sanford.Multimedia.Midi
     public sealed class OutputStream : OutputDeviceBase
     {
         [DllImport("winmm.dll")]
-        private static extern int midiStreamOpen(ref IntPtr handle, ref int deviceID, int reserved,
+        private static extern int midiStreamOpen(ref IntPtr DeviceHandle, ref int deviceID, int reserved,
             OutputDevice.MidiOutProc proc, IntPtr instance, uint flag);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamClose(IntPtr handle);
+        private static extern int midiStreamClose(IntPtr DeviceHandle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamOut(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+        private static extern int midiStreamOut(IntPtr DeviceHandle, IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamPause(IntPtr handle);
+        private static extern int midiStreamPause(IntPtr DeviceHandle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamPosition(IntPtr handle, ref Time t, int sizeOfTime);
+        private static extern int midiStreamPosition(IntPtr DeviceHandle, ref Time t, int sizeOfTime);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamProperty(IntPtr handle, ref Property p, uint flags);
+        private static extern int midiStreamProperty(IntPtr DeviceHandle, ref Property p, uint flags);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamRestart(IntPtr handle);
+        private static extern int midiStreamRestart(IntPtr DeviceHandle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamStop(IntPtr handle);
+        private static extern int midiStreamStop(IntPtr DeviceHandle);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Property
@@ -113,7 +113,7 @@ namespace Sanford.Multimedia.Midi
         {
             midiOutProc = HandleMessage;
 
-            int result = midiStreamOpen(ref handle, ref deviceID, 1, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
+            int result = midiStreamOpen(ref DeviceHandle, ref deviceID, 1, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
@@ -461,7 +461,7 @@ namespace Sanford.Multimedia.Midi
             }
             else
             {
-                base.HandleMessage(handle, msg, instance, param1, param2);
+                base.HandleMessage(DeviceHandle, msg, instance, param1, param2);
             }
         }
 
