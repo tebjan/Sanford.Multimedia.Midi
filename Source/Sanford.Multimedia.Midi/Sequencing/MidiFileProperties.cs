@@ -103,9 +103,14 @@ namespace Sanford.Multimedia.Midi
             format = trackCount = division = 0;
 
             FindHeader(strm);
-            Format = (int)ReadProperty(strm);
-            TrackCount = (int)ReadProperty(strm);
-            Division = (int)ReadProperty(strm);
+
+            // Division needs to be set first, otherwise AssertValid()
+            // will complain in DEBUG if sequence type is Ppqn.
+            int formatTmp = (int)ReadProperty(strm);
+            int trackCountTmp = (int)ReadProperty(strm);
+            Division = (int) ReadProperty(strm);
+            Format = formatTmp;
+            TrackCount = trackCountTmp;
 
             #region Invariant
 
