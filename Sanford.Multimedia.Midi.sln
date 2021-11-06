@@ -3,16 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencerDemo.Windows", "Demo\SequencerDemo\SequencerDemo.Windows.csproj", "{90480CE5-E392-4713-AB5C-7D659ACA0B85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencerDemo.Windows", "Demo\SequencerDemo\WindowsForms\SequencerDemo.Windows.csproj", "{90480CE5-E392-4713-AB5C-7D659ACA0B85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidiWatcher.Windows", "Demo\MidiWatcher\MidiWatcher.Windows.csproj", "{752C27BA-E092-455F-9B3F-1221E13FAE40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidiWatcher.Windows", "Demo\MidiWatcher\WindowsForms\MidiWatcher.Windows.csproj", "{752C27BA-E092-455F-9B3F-1221E13FAE40}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sanford.Multimedia.Midi.Core", "Source\Sanford.Multimedia.Midi.Core.csproj", "{4269C72A-8D3A-4737-8F89-72EAA33EA9E1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sanford.Multimedia.Midi.UI.Windows", "Sanford.Multimedia.Midi.UI.Windows\Sanford.Multimedia.Midi.UI.Windows.csproj", "{F908E146-FD17-4853-B6C3-6AEAC148B420}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sanford.Multimedia.Midi.UI.Windows", "UI\WindowsForms\Sanford.Multimedia.Midi.UI.Windows.csproj", "{F908E146-FD17-4853-B6C3-6AEAC148B420}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4269C72A-8D3A-4737-8F89-72EAA33EA9E1} = {4269C72A-8D3A-4737-8F89-72EAA33EA9E1}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{3B5DD8BE-1C3E-4FFB-A396-95313BB757E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MidiWatcher", "MidiWatcher", "{F50CF48F-74CB-42A2-9DA3-7DCEDDA6FA5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SequencerDemo", "SequencerDemo", "{B7AE69A7-CEC2-4082-A737-BF49452C5070}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sanford.Multimedia.Midi.UI.Gtk", "UI\Gtk\Sanford.Multimedia.Midi.UI.Gtk.csproj", "{6BAE9489-AE66-49BA-8724-9898E8ACF824}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{4E0B6F24-FDCC-4C90-8587-6AB8E8C74689}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidiWatcher.Gtk", "Demo\MidiWatcher\Gtk\MidiWatcher.Gtk.csproj", "{60FE0956-A812-4A77-B939-DFB17D1A045D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SequencerDemo.Gtk", "Demo\SequencerDemo\Gtk\SequencerDemo.Gtk.csproj", "{AD5DE7EE-7D29-4E22-B3F8-E50E49FA9E60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,9 +50,31 @@ Global
 		{F908E146-FD17-4853-B6C3-6AEAC148B420}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F908E146-FD17-4853-B6C3-6AEAC148B420}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F908E146-FD17-4853-B6C3-6AEAC148B420}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BAE9489-AE66-49BA-8724-9898E8ACF824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BAE9489-AE66-49BA-8724-9898E8ACF824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BAE9489-AE66-49BA-8724-9898E8ACF824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BAE9489-AE66-49BA-8724-9898E8ACF824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FE0956-A812-4A77-B939-DFB17D1A045D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FE0956-A812-4A77-B939-DFB17D1A045D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FE0956-A812-4A77-B939-DFB17D1A045D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FE0956-A812-4A77-B939-DFB17D1A045D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5DE7EE-7D29-4E22-B3F8-E50E49FA9E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5DE7EE-7D29-4E22-B3F8-E50E49FA9E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5DE7EE-7D29-4E22-B3F8-E50E49FA9E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5DE7EE-7D29-4E22-B3F8-E50E49FA9E60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{90480CE5-E392-4713-AB5C-7D659ACA0B85} = {B7AE69A7-CEC2-4082-A737-BF49452C5070}
+		{752C27BA-E092-455F-9B3F-1221E13FAE40} = {F50CF48F-74CB-42A2-9DA3-7DCEDDA6FA5C}
+		{F908E146-FD17-4853-B6C3-6AEAC148B420} = {3B5DD8BE-1C3E-4FFB-A396-95313BB757E1}
+		{F50CF48F-74CB-42A2-9DA3-7DCEDDA6FA5C} = {4E0B6F24-FDCC-4C90-8587-6AB8E8C74689}
+		{B7AE69A7-CEC2-4082-A737-BF49452C5070} = {4E0B6F24-FDCC-4C90-8587-6AB8E8C74689}
+		{6BAE9489-AE66-49BA-8724-9898E8ACF824} = {3B5DD8BE-1C3E-4FFB-A396-95313BB757E1}
+		{60FE0956-A812-4A77-B939-DFB17D1A045D} = {F50CF48F-74CB-42A2-9DA3-7DCEDDA6FA5C}
+		{AD5DE7EE-7D29-4E22-B3F8-E50E49FA9E60} = {B7AE69A7-CEC2-4082-A737-BF49452C5070}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0F89C5C-2D39-4686-8962-8311987EF148}
