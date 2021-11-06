@@ -10,7 +10,8 @@ Improvements:
 - .NET 5 compatible
 - Core assembly 'Sanford.Multimedia.Midi.Core' can be used without any UI attached
 - 'Sanford.Multimedia.Midi.Core' assembly is portable and cross-platform, it can be used anywhere!
-- Does not require additional assemblies
+- 'Sanford.Multimedia.Midi.Core' does not require additional assemblies
+- Only the UI assemblies require additional assemblies
 - Faster midi file reading in Release build
 
 Since this is developed in .NET, the following will need to be installed:
