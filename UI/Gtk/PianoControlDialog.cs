@@ -26,6 +26,32 @@ namespace Sanford.Multimedia.Midi.UI.Gtk
             UpdateProperties();
         }
 
+        //       public PianoControlDialog() : this(new Builder("PianoControlDialog.glade")) { }
+
+        private PianoControlDialog(Builder builder) : base(builder.GetRawOwnedObject("PianoControlDialog"))
+        {
+            builder.Autoconnect(this);
+
+            DeleteEvent += Window_DeleteEvent;
+
+            okButton.Clicked += okButton_Clicked;
+            cancelButton.Clicked += cancelButton_Clicked;
+            lowNoteIDSpinButton.ValueChanged += new EventHandler(lowNoteIDSpinButton_ValueChanged);
+            lowNoteIDSpinButton.SetRange(0, 127);
+            highNoteIDSpinButton.ValueChanged += new EventHandler(lowNoteIDSpinButton_ValueChanged);
+            highNoteIDSpinButton.SetRange(0, 127);
+            noteRangeBox.Add(highNoteIDLabel);
+            noteRangeBox.Add(lowNoteIDLabel);
+            noteRangeBox.Add(highNoteIDSpinButton);
+            noteRangeBox.Add(lowNoteIDSpinButton);
+            /*lowNoteIDSpinButton.Clicked += SpinButton;
+            noteRangeBox += Box;
+            highNoteIDLabel += Label;
+            lowNoteIDLabel += Label;
+            highNoteIDSpinButton += SpinButton;
+            noteRangeBox.SuspendLayout;*/
+        }
+
         private void UpdateProperties()
         {
             lowNoteID = (int)lowNoteIDSpinButton.Value;
@@ -69,31 +95,7 @@ namespace Sanford.Multimedia.Midi.UI.Gtk
             }
         }
 
-        //       public PianoControlDialog() : this(new Builder("PianoControlDialog.glade")) { }
-
-        private PianoControlDialog(Builder builder) : base(builder.GetRawOwnedObject("PianoControlDialog"))
-        {
-            builder.Autoconnect(this);
-
-            DeleteEvent += Window_DeleteEvent;
-            
-            okButton.Clicked += okButton_Clicked;
-            cancelButton.Clicked += cancelButton_Clicked;
-            lowNoteIDSpinButton.ValueChanged += new EventHandler(lowNoteIDSpinButton_ValueChanged);
-            lowNoteIDSpinButton.SetRange(0, 127);
-            highNoteIDSpinButton.ValueChanged += new EventHandler(lowNoteIDSpinButton_ValueChanged);
-            highNoteIDSpinButton.SetRange(0, 127);
-            noteRangeBox.Add(highNoteIDLabel);
-            noteRangeBox.Add(lowNoteIDLabel);
-            noteRangeBox.Add(highNoteIDSpinButton);
-            noteRangeBox.Add(lowNoteIDSpinButton);
-            /*lowNoteIDSpinButton.Clicked += SpinButton;
-            noteRangeBox += Box;
-            highNoteIDLabel += Label;
-            lowNoteIDLabel += Label;
-            highNoteIDSpinButton += SpinButton;
-            noteRangeBox.SuspendLayout;*/
-        }
+        
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
         {
@@ -109,8 +111,6 @@ namespace Sanford.Multimedia.Midi.UI.Gtk
 
         private void cancelButton_Clicked(object sender, EventArgs e)
         {
-            UpdateProperties();
-
             Close();
         }
 

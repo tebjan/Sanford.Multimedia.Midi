@@ -33,33 +33,55 @@
 #endregion
 
 
+
 using System;
 using System.Collections.Generic;
 //using System.Drawing;
 using System.Threading;
 using Gtk;
-using SkiaSharp;
+using Gdk;
+using GLib;
+
+using Color = Cairo.Color;
+
 
 namespace Sanford.Multimedia.Midi.UI.Gtk
 {
     public partial class PianoControl
     {
-        private class PianoKey : Widget
+        private class PianoKey : DrawingArea
         {
             private PianoControl owner;
 
             private bool on = false;
 
-            private SolidBrush onBrush = new SolidBrush(Color.SkyBlue);
+            //private Color onBrush = new Color(135, 206, 235);
+            private Color onBrush = PianoKeyColor.SkyBlue;
 
-            private SolidBrush offBrush = new SolidBrush(Color.White);
+            //private Color offBrush = new Color(1, 1, 1);
+            private Color offBrush = PianoKeyColor.White;
 
             private int noteID = 60;
+
+
+            private int px;
+            private int py;
+            private Orientation orientation;
+            private int minimum_size;
+            private int natural_size;
+            private int allocated_pos;
+            private int allocated_size;
+
+            public Point Location
+            {
+                get => new Point(px, py);
+                set => OnAdjustSizeAllocation(orientation, out minimum_size, out natural_size, out allocated_pos, out allocated_size);
+            }
 
             public PianoKey(PianoControl owner)
             {
                 this.owner = owner;
-                this.TabStop = false;
+                this.IsFocus = false;
             }
 
             public void PressPianoKey()
@@ -75,7 +97,7 @@ namespace Sanford.Multimedia.Midi.UI.Gtk
 
                 on = true;
 
-                Invalidate();
+                QueueDraw();
 
                 owner.OnPianoKeyDown(new PianoKeyEventArgs(noteID));
             }
@@ -93,106 +115,145 @@ namespace Sanford.Multimedia.Midi.UI.Gtk
 
                 on = false;
 
-                Invalidate();
+                QueueDraw();
 
                 owner.OnPianoKeyUp(new PianoKeyEventArgs(noteID));
             }
 
-            protected override void Dispose(bool disposing)
-            {
-                if (disposing)
-                {
-                    onBrush.Dispose();
-                    offBrush.Dispose();
-                }
 
-                base.Dispose(disposing);
-            }
 
-            protected override void OnMouseEnter(EventArgs e)
+            /* 
+            protected override bool OnWidgetEvent(Event evnt)
             {
-                if (Widget.MouseButtons == MouseButtons.Left)
+                var LeftMouseButton = new EventType();
+
+
+                if (LeftMouseButton == EventType.ButtonPress)
                 {
                     PressPianoKey();
                 }
 
-                base.OnMouseEnter(e);
+                base.OnWidgetEvent(evnt);
+
+                return true;
+            }
+             */
+
+            protected void OnMouseEnter(ButtonPressEventArgs args, EventCrossing evnt)
+            {
+                if (args.Event.Button == 1 && args.Event.Type == EventType.ButtonPress)
+                {
+                    PressPianoKey();
+                }
+
+                base.OnEnterNotifyEvent(evnt);
             }
 
-            protected override void OnMouseLeave(EventArgs e)
+            /*
+            protected override bool OnWidgetEvent(Event evnt)
+            {
+                var LeftMouseButton = ButtonPressHandler;
+
+                if (LeftMouseButton)
+                {
+                    PressPianoKey();
+                }
+
+                base.OnWidgetEvent(evnt);
+
+                return true;
+            }
+            */
+
+            protected void OnMouseLeave(EventCrossing evnt)
             {
                 if (on)
                 {
                     ReleasePianoKey();
                 }
 
-                base.OnMouseLeave(e);
+                base.OnLeaveNotifyEvent(evnt);
             }
 
-            protected override void OnMouseDown(MouseEventArgs e)
+            protected void OnMousePress(EventButton evnt)
             {
                 PressPianoKey();
 
-                if (!owner.Focused)
+
+                if (!owner.HasFocus)
                 {
-                    owner.Focus();
+                    owner.Activate();
                 }
 
-                base.OnMouseDown(e);
+                base.OnButtonPressEvent(evnt);
             }
 
-            protected override void OnMouseUp(MouseEventArgs e)
+            protected void OnMouseRelease(EventButton evnt)
             {
                 ReleasePianoKey();
 
-                base.OnMouseUp(e);
+                base.OnButtonReleaseEvent(evnt);
             }
 
-            protected override void OnMouseMove(MouseEventArgs e)
+            protected void OnMouseMove(EventMotion e)
             {
                 if (e.X < 0 || e.X > WidthRequest || e.Y < 0 || e.Y > HeightRequest)
                 {
-                    Capture = false;
+                    CanFocus = false;
                 }
 
-                base.OnMouseMove(e);
+                base.OnMotionNotifyEvent(e);
             }
 
-            protected override void OnPaint(PaintEventArgs e)
+            protected void OnPaint(Cairo.Context cr, int width, int height, bool disposing)
             {
+
                 if (on)
                 {
-                    e.Graphics.FillRectangle(onBrush, 0, 0, Size.Width, Size.Height);
+                    cr.Rectangle(0, 0, width, height);
+                    cr.SetSourceColor(onBrush);
+                    cr.Fill();
                 }
                 else
                 {
-                    e.Graphics.FillRectangle(offBrush, 0, 0, Size.Width, Size.Height);
+                    cr.Rectangle(0, 0, width, height);
+                    cr.SetSourceColor(offBrush);
+                    cr.Fill();
                 }
 
-                e.Graphics.DrawRectangle(Pens.Black, 0, 0, Size.Width - 1, Size.Height - 1);
+                cr.SetSourceRGB(0, 0, 0);
+                cr.LineWidth = 1;
+                cr.Rectangle(0, 0, width - 1, height - 1);
+                cr.StrokePreserve();
+                cr.Stroke();
 
-                base.OnPaint(e);
+                if (disposing)
+                {
+                    ((IDisposable)cr).Dispose();
+                }
+
+                base.OnDrawn(cr);
             }
 
-            protected override void OnResize(EventArgs e)
+            protected void OnResize(EventWindowState evnt)
             {
-                Invalidate(); // Calls OnPaint while resizing to prevent design errors
-                base.OnResize(e);
+                QueueDraw(); // Calls OnPaint while resizing to prevent design errors
+                base.OnWindowStateEvent(evnt);
             }
 
             public Color NoteOnColor
             {
                 get
                 {
-                    return onBrush.Color;
+                    return onBrush;
                 }
                 set
                 {
-                    onBrush.Color = value;
+                    onBrush = value;
 
                     if (on)
                     {
-                        Invalidate();
+                        QueueDraw();
                     }
                 }
             }
@@ -201,15 +262,15 @@ namespace Sanford.Multimedia.Midi.UI.Gtk
             {
                 get
                 {
-                    return offBrush.Color;
+                    return offBrush;
                 }
                 set
                 {
-                    offBrush.Color = value;
+                    offBrush = value;
 
                     if (!on)
                     {
-                        Invalidate();
+                        QueueDraw();
                     }
                 }
             }

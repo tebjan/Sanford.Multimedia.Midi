@@ -2,6 +2,18 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkAdjustment" id="adjustmentHighNote">
+    <property name="upper">127</property>
+    <property name="value">109</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustmentLowNote">
+    <property name="upper">127</property>
+    <property name="value">21</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
   <object class="GtkWindow" id="PianoControlDialog">
     <property name="width-request">290</property>
     <property name="height-request">168</property>
@@ -10,7 +22,7 @@
     <property name="default-width">290</property>
     <property name="default-height">218</property>
     <child>
-      <object class="GtkBox" id="contentBoxColumn">
+      <object class="GtkBox" id="contentBox">
         <property name="width-request">290</property>
         <property name="height-request">158</property>
         <property name="visible">True</property>
@@ -44,7 +56,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="lowNoteHighNoteRow">
+          <object class="GtkBox" id="noteRangeBox">
             <property name="width-request">290</property>
             <property name="height-request">100</property>
             <property name="visible">True</property>
@@ -58,10 +70,14 @@
                 <property name="can-focus">False</property>
                 <child>
                   <object class="GtkSpinButton" id="lowNoteIDSpinButton">
-                    <property name="width-request">118</property>
-                    <property name="height-request">34</property>
+                    <property name="width-request">130</property>
+                    <property name="height-request">35</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="input-purpose">number</property>
+                    <property name="adjustment">adjustmentLowNote</property>
+                    <property name="value">21</property>
+                    <signal name="value-changed" handler="lowNoteIDSpinButton_ValueChanged" swapped="no"/>
                   </object>
                   <packing>
                     <property name="x">15</property>
@@ -99,10 +115,14 @@
                 <property name="can-focus">False</property>
                 <child>
                   <object class="GtkSpinButton" id="highNoteIDSpinButton">
-                    <property name="width-request">118</property>
-                    <property name="height-request">34</property>
+                    <property name="width-request">130</property>
+                    <property name="height-request">35</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="input-purpose">number</property>
+                    <property name="adjustment">adjustmentHighNote</property>
+                    <property name="value">109</property>
+                    <signal name="value-changed" handler="highNoteIDSpinButton_ValueChanged" swapped="no"/>
                   </object>
                   <packing>
                     <property name="x">15</property>
@@ -139,7 +159,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="buttonBoxRow">
+          <object class="GtkBox" id="buttonBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>

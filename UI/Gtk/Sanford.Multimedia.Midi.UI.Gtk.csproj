@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Version>7.0.0</Version>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,20 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GtkSharp" Version="3.24.24.*" />
-    <PackageReference Include="SkiaSharp" Version="2.80.3" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.80.3" />
+    <PackageReference Include="GtkSharp" Version="3.24.24.38" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Sanford.Multimedia.Midi.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="PianoControl.PianoKey.cs" />
-    <Compile Update="Component1 - Copy.Designer.cs">
-      <DependentUpon>PianoControl.Designer.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>

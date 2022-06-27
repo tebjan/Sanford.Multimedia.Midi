@@ -1,0 +1,76 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "31bea236-9ab6-4c94-bc2b-c9b184a1ee23": {
+      "ProjectGuid": "31bea236-9ab6-4c94-bc2b-c9b184a1ee23",
+      "DisplayName": "SkiaTest",
+      "ColorIndex": 0
+    },
+    "f908e146-fd17-4853-b6c3-6aeac148b420": {
+      "ProjectGuid": "f908e146-fd17-4853-b6c3-6aeac148b420",
+      "DisplayName": "Sanford.Multimedia.Midi.UI.Windows",
+      "ColorIndex": 1
+    },
+    "c8817129-4d17-4d2e-a2e8-d3e39ae39695": {
+      "ProjectGuid": "c8817129-4d17-4d2e-a2e8-d3e39ae39695",
+      "DisplayName": "SkiaSharp.AnalogClock",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "1c2c2dfa-3061-42fa-8527-a6ed8d3e5404": {
+      "ProjectGuid": "1c2c2dfa-3061-42fa-8527-a6ed8d3e5404",
+      "DisplayName": "GTKTest",
+      "ColorIndex": 3
+    },
+    "90480ce5-e392-4713-ab5c-7d659aca0b85": {
+      "ProjectGuid": "90480ce5-e392-4713-ab5c-7d659aca0b85",
+      "DisplayName": "SequencerDemo.Windows",
+      "ColorIndex": 4
+    },
+    "184f8b7c-7f49-4308-86c3-f04f91d6f3ad": {
+      "ProjectGuid": "184f8b7c-7f49-4308-86c3-f04f91d6f3ad",
+      "DisplayName": "SkiaSharp.PianoKeys.Test.WindowsForms",
+      "ColorIndex": 5
+    },
+    "4269c72a-8d3a-4737-8f89-72eaa33ea9e1": {
+      "ProjectGuid": "4269c72a-8d3a-4737-8f89-72eaa33ea9e1",
+      "DisplayName": "Sanford.Multimedia.Midi.Core",
+      "ColorIndex": 6
+    },
+    "6bae9489-ae66-49ba-8724-9898e8acf824": {
+      "ProjectGuid": "6bae9489-ae66-49ba-8724-9898e8acf824",
+      "DisplayName": "Sanford.Multimedia.Midi.UI.Gtk",
+      "ColorIndex": 7
+    },
+    "8f745afe-f2c8-4375-bf10-d153b6f3fb00": {
+      "ProjectGuid": "8f745afe-f2c8-4375-bf10-d153b6f3fb00",
+      "DisplayName": "SkiaTest",
+      "ColorIndex": 8
+    },
+    "cc1b3440-0eeb-4b43-8ee5-328fd6ea45b8": {
+      "ProjectGuid": "cc1b3440-0eeb-4b43-8ee5-328fd6ea45b8",
+      "DisplayName": "SkiaSharp.PianoKeys.Test.WindowsForms",
+      "ColorIndex": 9
+    },
+    "2f082562-a6d1-45d7-a309-d625ddb706fd": {
+      "ProjectGuid": "2f082562-a6d1-45d7-a309-d625ddb706fd",
+      "DisplayName": "UI.WindowsForms",
+      "ColorIndex": 10
+    },
+    "64769287-e4a4-473a-9eb4-d33984fc51e3": {
+      "ProjectGuid": "64769287-e4a4-473a-9eb4-d33984fc51e3",
+      "DisplayName": "UI.WindowsForms",
+      "ColorIndex": 11
+    },
+    "448955c0-78cf-4e9b-8bfb-e0badb8602db": {
+      "ProjectGuid": "448955c0-78cf-4e9b-8bfb-e0badb8602db",
+      "DisplayName": "UI.WindowsForms",
+      "ColorIndex": 12
+    }
+  },
+  "NextColorIndex": 13
+}

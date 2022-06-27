@@ -1,35 +1,78 @@
 using System;
 using Gtk;
-using UI = Gtk.Builder.ObjectAttribute;
+using GUI = Gtk.Builder.ObjectAttribute;
 
 namespace Sanford.Multimedia.Midi
 {
-    class MainWindow : Window
+    class OutputDeviceDialog : Window
     {
-        [UI] private Label _label1 = null;
-        [UI] private Button _button1 = null;
+        [GUI] private ToggleButton _okToggle;
+        [GUI] private ToggleButton _cancelToggle;
+        [GUI] private ComboBox _outputComboBox;
+        [GUI] private Label _outputLabel;
 
-        private int _counter;
+        private int outputDeviceID = 0;
 
-        public MainWindow() : this(new Builder("MainWindow.glade")) { }
+        public OutputDeviceDialog() : this(new Builder("OutputDeviceDialog.glade")) { }
 
-        private MainWindow(Builder builder) : base(builder.GetRawOwnedObject("MainWindow"))
+        private OutputDeviceDialog(Builder builder) : base(builder.GetRawOwnedObject("OutputDeviceDialog"))
         {
             builder.Autoconnect(this);
 
-            DeleteEvent += Window_DeleteEvent;
-            _button1.Clicked += Button1_Clicked;
+            _okToggle.Clicked += okToggle_toggled;
+            _cancelToggle.Clicked += cancelToggle_toggled;
+
+            if (OutputDevice.DeviceCount > 0)
+            {
+                for (int i = 0; i < OutputDevice.DeviceCount; i++)
+                {
+                    _outputComboBox.CellArea.GetProperty(OutputDevice.GetDeviceCapabilities(i).name);
+                }
+
+                _outputComboBox.Active = outputDeviceID;
+            }
         }
 
-        private void Window_DeleteEvent(object sender, DeleteEventArgs a)
+        protected void OnShown(EventHandler e)
         {
-            Application.Quit();
+            if (OutputDevice.DeviceCount > 0)
+            {
+                _outputComboBox.Active = outputDeviceID;
+            }
+
+            OnShown(e);
         }
 
-        private void Button1_Clicked(object sender, EventArgs a)
+        private void okToggle_toggled(object sender, EventArgs e)
         {
-            _counter++;
-            _label1.Text = "Hello World! This button has been clicked " + _counter + " time(s).";
+            if (OutputDevice.DeviceCount > 0)
+            {
+                outputDeviceID = _outputComboBox.Active;
+            }
+
+            Dispose();
+        }
+
+        private void cancelToggle_toggled(object sender, EventArgs e)
+        {
+            Dispose();
+        }
+
+        public int OutputDeviceID
+        {
+            get
+            {
+                #region Require
+
+                if (OutputDevice.DeviceCount == 0)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                #endregion
+
+                return outputDeviceID;
+            }
         }
     }
 }
