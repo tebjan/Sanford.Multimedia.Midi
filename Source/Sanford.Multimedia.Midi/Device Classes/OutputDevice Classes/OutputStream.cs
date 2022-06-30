@@ -41,32 +41,35 @@ using Sanford.Multimedia.Timers;
 
 namespace Sanford.Multimedia.Midi
 {
+    /// <summary>
+    /// Sealed class stream for MIDI output devices.
+    /// </summary>
     public sealed class OutputStream : OutputDeviceBase
     {
         [DllImport("winmm.dll")]
-        private static extern int midiStreamOpen(ref IntPtr handle, ref int deviceID, int reserved,
+        private static extern int midiStreamOpen(ref IntPtr DeviceHandle, ref int deviceID, int reserved,
             OutputDevice.MidiOutProc proc, IntPtr instance, uint flag);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamClose(IntPtr handle);
+        private static extern int midiStreamClose(IntPtr DeviceHandle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamOut(IntPtr handle, IntPtr headerPtr, int sizeOfMidiHeader);
+        private static extern int midiStreamOut(IntPtr DeviceHandle, IntPtr headerPtr, int sizeOfMidiHeader);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamPause(IntPtr handle);
+        private static extern int midiStreamPause(IntPtr DeviceHandle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamPosition(IntPtr handle, ref Time t, int sizeOfTime);
+        private static extern int midiStreamPosition(IntPtr DeviceHandle, ref Time t, int sizeOfTime);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamProperty(IntPtr handle, ref Property p, uint flags);
+        private static extern int midiStreamProperty(IntPtr DeviceHandle, ref Property p, uint flags);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamRestart(IntPtr handle);
+        private static extern int midiStreamRestart(IntPtr DeviceHandle);
 
         [DllImport("winmm.dll")]
-        private static extern int midiStreamStop(IntPtr handle);
+        private static extern int midiStreamStop(IntPtr DeviceHandle);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Property
@@ -107,13 +110,19 @@ namespace Sanford.Multimedia.Midi
 
         private MidiHeaderBuilder headerBuilder = new MidiHeaderBuilder();
 
+        /// <summary>
+        /// Handles the event for no operations.
+        /// </summary>
         public event EventHandler<NoOpEventArgs> NoOpOccurred;
 
+        /// <summary>
+        /// Stream for MIDI output devices.
+        /// </summary>
         public OutputStream(int deviceID) : base(deviceID)
         {
             midiOutProc = HandleMessage;
 
-            int result = midiStreamOpen(ref handle, ref deviceID, 1, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
+            int result = midiStreamOpen(ref DeviceHandle, ref deviceID, 1, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
@@ -121,6 +130,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Disposes the streams when closed.
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if(disposing)
@@ -144,8 +156,11 @@ namespace Sanford.Multimedia.Midi
             }
 
             base.Dispose(disposing);
-        }       
+        }
 
+        /// <summary>
+        /// When the application is closed, this will dispose of any streams.
+        /// </summary>
         public override void Close()
         {
             #region Guard
@@ -160,6 +175,9 @@ namespace Sanford.Multimedia.Midi
             Dispose(true);
         }
 
+        /// <summary>
+        /// Starts playing the stream.
+        /// </summary>
         public void StartPlaying()
         {
             #region Require
@@ -182,6 +200,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Pauses playing the stream.
+        /// </summary>
         public void PausePlaying()
         {
             #region Require
@@ -204,6 +225,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Stops playing the stream.
+        /// </summary>
         public void StopPlaying()
         {
             #region Require
@@ -226,6 +250,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Resets the MIDI output device playing the stream.
+        /// </summary>
         public override void Reset()
         {
             #region Require
@@ -243,6 +270,9 @@ namespace Sanford.Multimedia.Midi
             base.Reset();
         }
 
+        /// <summary>
+        /// Writes to the MIDI output device stream.
+        /// </summary>
         public void Write(MidiEvent e)
         {
             switch(e.MidiMessage.MessageType)
@@ -355,6 +385,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Writes the no operation for MIDI output device streams.
+        /// </summary>
         public void WriteNoOp(int deltaTicks, int data)
         {
             // Delta time.
@@ -371,6 +404,9 @@ namespace Sanford.Multimedia.Midi
             offsetTicks = 0;            
         }
 
+        /// <summary>
+        /// Clears out all the MIDI output device streams when done.
+        /// </summary>
         public void Flush()
         {
             #region Require
@@ -415,6 +451,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Initializes the amount of time for the MIDI output device stream.
+        /// </summary>
         public Time GetTime(TimeType type)
         {
             #region Require
@@ -453,6 +492,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Handles the messages for the MIDI output device streams.
+        /// </summary>
         protected override void HandleMessage(IntPtr hnd, int msg, IntPtr instance, IntPtr param1, IntPtr param2)
         {
             if(msg == MOM_POSITIONCB)
@@ -461,7 +503,7 @@ namespace Sanford.Multimedia.Midi
             }
             else
             {
-                base.HandleMessage(handle, msg, instance, param1, param2);
+                base.HandleMessage(DeviceHandle, msg, instance, param1, param2);
             }
         }
 
@@ -492,6 +534,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Gets the size of the MIDI output device stream and sets the amount to be divided.
+        /// </summary>
         public int Division
         {
             get
@@ -554,6 +599,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Gets the amount of tempo, then sets the tempo for the MIDI output device stream.
+        /// </summary>
         public int Tempo
         {
             get

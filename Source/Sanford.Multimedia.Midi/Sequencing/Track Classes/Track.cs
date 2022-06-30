@@ -68,6 +68,9 @@ namespace Sanford.Multimedia.Midi
 
         #region Construction
 
+        /// <summary>
+		/// Main function that represents the end of track MIDI event.
+		/// </summary>
         public Track()
         {
             endOfTrackMidiEvent = new MidiEvent(this, Length, MetaMessage.EndOfTrackMessage);
@@ -413,6 +416,9 @@ namespace Sanford.Multimedia.Midi
             return result;
         }
 
+        /// <summary>
+		/// A MIDI event that moves the track.
+		/// </summary>
         public void Move(MidiEvent e, int newPosition)
         {
             #region Require

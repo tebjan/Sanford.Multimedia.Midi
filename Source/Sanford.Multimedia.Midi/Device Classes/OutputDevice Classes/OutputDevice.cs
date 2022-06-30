@@ -48,11 +48,11 @@ namespace Sanford.Multimedia.Midi
         #region Win32 Midi Output Functions and Constants
 
         [DllImport("winmm.dll")]
-        private static extern int midiOutOpen(out IntPtr handle, int deviceID,
+        private static extern int midiOutOpen(out IntPtr DeviceHandle, int deviceID,
             MidiOutProc proc, IntPtr instance, int flags);
 
         [DllImport("winmm.dll")]
-        private static extern int midiOutClose(IntPtr handle);
+        private static extern int midiOutClose(IntPtr DeviceHandle);
 
         #endregion 
 
@@ -71,7 +71,7 @@ namespace Sanford.Multimedia.Midi
         {
             midiOutProc = HandleMessage;
 
-            int result = midiOutOpen(out handle, deviceID, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
+            int result = midiOutOpen(out DeviceHandle, deviceID, midiOutProc, IntPtr.Zero, CALLBACK_FUNCTION);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
@@ -79,8 +79,11 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
-        #endregion     
-   
+        #endregion
+
+        /// <summary>
+        /// When closed, disposes of the MIDI output device.
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if(disposing)
@@ -147,6 +150,9 @@ namespace Sanford.Multimedia.Midi
             base.Reset();
         }
 
+        /// <summary>
+        /// Sends the MIDI output channel device message.
+        /// </summary>
         public override void Send(ChannelMessage message)
         {
             #region Require
@@ -188,6 +194,9 @@ namespace Sanford.Multimedia.Midi
             }
         }
 
+        /// <summary>
+        /// Sends a system ex MIDI output device message.
+        /// </summary>
         public override void Send(SysExMessage message)
         {
             // System exclusive cancels running status.
@@ -196,6 +205,9 @@ namespace Sanford.Multimedia.Midi
             base.Send(message);
         }
 
+        /// <summary>
+        /// Sends a system common MIDI output device message.
+        /// </summary>
         public override void Send(SysCommonMessage message)
         {
             #region Require

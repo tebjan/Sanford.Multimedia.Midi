@@ -38,21 +38,39 @@ using System.Threading;
 
 namespace Sanford.Multimedia
 {
+    /// <summary>
+    /// Defines the public abstract 'Device' class to interface System.IDisposable.
+    /// </summary>
     public abstract class Device : IDisposable
     {
+        /// <summary>
+        /// This protected construct, uses a Callback Function integer if it's equal to value 0x30000.
+        /// </summary>
         protected const int CALLBACK_FUNCTION = 0x30000;
 
+        /// <summary>
+        /// This protected construct, uses a Callback Event integer if it's equal to value 0x50000.
+        /// </summary>
         protected const int CALLBACK_EVENT = 0x50000;
 
         private int deviceID;
 
+        /// <summary>
+        /// Synchronizes the context.
+        /// </summary>
         protected SynchronizationContext context;
 
         // Indicates whether the device has been disposed.
         private bool disposed = false;
 
+        /// <summary>
+        /// Outputs an error via ErrorEventArgs, if the EventHandler encounters an issue.
+        /// </summary>
         public event EventHandler<ErrorEventArgs> Error;
 
+        /// <summary>
+        /// This public function utilises the Device ID integer with SynchronizationContext.
+        /// </summary>
         public Device(int deviceID)
         {
             this.deviceID = deviceID;
@@ -67,6 +85,9 @@ namespace Sanford.Multimedia
             }
         }
 
+        /// <summary>
+        /// Utilises system garbage collector (System.GC) to dispose memory when the boolean value is set to true.
+        /// </summary>
         protected virtual void Dispose(bool disposing)
         {
             if(disposing)
@@ -77,6 +98,9 @@ namespace Sanford.Multimedia
             }
         }
 
+        /// <summary>
+        /// Error handling function.
+        /// </summary>
         protected virtual void OnError(ErrorEventArgs e)
         {
             EventHandler<ErrorEventArgs> handler = Error;
@@ -108,6 +132,9 @@ namespace Sanford.Multimedia
             get;
         }
 
+        /// <summary>
+        /// Calls the DeviceID public integer.
+        /// </summary>
         public int DeviceID
         {
             get
@@ -116,6 +143,9 @@ namespace Sanford.Multimedia
             }
         }
 
+        /// <summary>
+        /// Declares the device as disposed.
+        /// </summary>
         public bool IsDisposed
         {
             get
