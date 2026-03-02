@@ -337,9 +337,9 @@ namespace Sanford.Multimedia.Midi
         EffectsLevel = 91,
 
         /// <summary>
-        /// The Tremelo Level.
+        /// The Tremolo Level.
         /// </summary>
-        TremeloLevel,
+        TremoloLevel,
         
         /// <summary>
         /// The Chorus Level.
