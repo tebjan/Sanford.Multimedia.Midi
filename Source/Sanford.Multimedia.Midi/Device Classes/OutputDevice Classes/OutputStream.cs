@@ -474,7 +474,7 @@ namespace Sanford.Multimedia.Midi
 
             for(int i = 0; i < midiEvent.Length; i++)
             {
-                midiEvent[i] = Marshal.ReadByte(header.data, header.offset + i);
+                midiEvent[i] = Marshal.ReadByte(header.data, (int)header.offset + i);
             }
 
             // If this is a NoOp event.

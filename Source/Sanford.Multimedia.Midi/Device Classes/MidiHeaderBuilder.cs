@@ -73,8 +73,8 @@ namespace Sanford.Multimedia.Midi
             MidiHeader header = new MidiHeader();
 
             // Initialize the MidiHeader.
-            header.bufferLength = BufferLength;
-            header.bytesRecorded = BufferLength;
+            header.bufferLength = (uint)BufferLength;
+            header.bytesRecorded = (uint)BufferLength;
             header.data = Marshal.AllocHGlobal(BufferLength);
             header.flags = 0;
 
