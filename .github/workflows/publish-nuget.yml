@@ -53,4 +53,20 @@ jobs:
           msbuild Source\Sanford.Multimedia.Midi.csproj /restore /t:Pack /p:Configuration=Release /p:PackageVersion=${{ steps.version.outputs.version }} /p:PackageOutputPath=${{ github.workspace }}\artifacts
 
       - name: Push to NuGet.org
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ secrets.NUGET_KEY }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
+        shell: pwsh
+        run: |
+          $nupkgs = Get-ChildItem -Path artifacts -Filter *.nupkg -File
+          if (-not $nupkgs) {
+            throw "No .nupkg files found in artifacts."
+          }
+
+          foreach ($pkg in $nupkgs) {
+            Write-Host "Pushing $($pkg.FullName)"
+            dotnet nuget push $pkg.FullName --api-key "${{ secrets.NUGET_KEY }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
+          }
+
+          $snupkgs = Get-ChildItem -Path artifacts -Filter *.snupkg -File
+          foreach ($symbolPkg in $snupkgs) {
+            Write-Host "Pushing symbols $($symbolPkg.FullName)"
+            dotnet nuget push $symbolPkg.FullName --api-key "${{ secrets.NUGET_KEY }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
+          }
