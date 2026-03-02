@@ -1,0 +1,56 @@
+name: publish-nuget
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Package version override (example: 6.6.3)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Resolve package version
+        id: version
+        shell: pwsh
+        run: |
+          $manualVersion = "${{ github.event.inputs.version }}"
+          if (-not [string]::IsNullOrWhiteSpace($manualVersion)) {
+            $version = $manualVersion
+          }
+          elseif ("${{ github.ref_type }}" -eq "tag") {
+            $version = "${{ github.ref_name }}" -replace "^v", ""
+          }
+          else {
+            throw "No package version resolved. Use a v* tag or workflow_dispatch with version input."
+          }
+
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          Write-Host "Publishing version $version"
+
+      - name: Pack
+        shell: pwsh
+        run: |
+          msbuild Source\Sanford.Multimedia.Midi.csproj /restore /t:Pack /p:Configuration=Release /p:PackageVersion=${{ steps.version.outputs.version }} /p:PackageOutputPath=${{ github.workspace }}\artifacts
+
+      - name: Push to NuGet.org
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key "${{ secrets.NUGET_KEY }}" --source "https://api.nuget.org/v3/index.json" --skip-duplicate
