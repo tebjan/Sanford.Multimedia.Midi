@@ -1,6 +1,8 @@
 Sanford.Multimedia.Midi
 =======================
 
+[![NuGet version](https://img.shields.io/nuget/v/Sanford.Multimedia.Midi.svg)](https://www.nuget.org/packages/Sanford.Multimedia.Midi/)
+
 This is all source code of the C# MIDI toolkit from CodeProject by Leslie Sanford.
 
 Improvements:
