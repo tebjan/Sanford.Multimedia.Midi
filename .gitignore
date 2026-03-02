@@ -4,3 +4,4 @@ bin/Debug/SequencerDemo.vshost.exe.manifest
 bin/
 *.suo
 *.csproj.user
+/.vs/
