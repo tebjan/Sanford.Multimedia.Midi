@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net20;net35;net40;net45;net452;net461;net48;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net20;net35;net40;net45;net452;net461;net48;net8.0-windows;net6.0-windows</TargetFrameworks>
     <OutputType>Library</OutputType>
     <RootNamespace>Sanford.Multimedia.Midi</RootNamespace>
     <AssemblyName>Sanford.Multimedia.Midi</AssemblyName>
@@ -11,7 +11,7 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
 
     <PackageId>Sanford.Multimedia.Midi</PackageId>
-    <Version>6.7.1</Version>
+    <Version>6.7.2</Version>
     <Authors>Leslie Sanford;Tebjan Halm;Andreas Grimme;Andres Fernandez de Prado</Authors>
     <Company>Leslie Sanford</Company>
     <Description>A toolkit for creating MIDI applications with .NET.</Description>
@@ -42,11 +42,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows' Or '$(TargetFramework)' == 'net6.0-windows'">
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows' Or '$(TargetFramework)' == 'net6.0-windows'">
     <AssemblyAttribute Include="System.Runtime.Versioning.SupportedOSPlatformAttribute">
       <_Parameter1>windows</_Parameter1>
     </AssemblyAttribute>
