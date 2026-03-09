@@ -187,7 +187,7 @@ namespace Sanford.Multimedia.Midi
             MidiInCaps caps = new MidiInCaps();
 
             IntPtr devID = (IntPtr)deviceID;
-            result = midiInGetDevCaps(devID, ref caps, SizeOfMidiHeader);
+            result = midiInGetDevCaps(devID, ref caps, MidiInCaps.SizeOf);
 
             if(result != MidiDeviceException.MMSYSERR_NOERROR)
             {
