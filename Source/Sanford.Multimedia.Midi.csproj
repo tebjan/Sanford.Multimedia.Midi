@@ -11,7 +11,7 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
 
     <PackageId>Sanford.Multimedia.Midi</PackageId>
-    <Version>6.7.2</Version>
+    <Version>6.7.3</Version>
     <Authors>Leslie Sanford;Tebjan Halm;Andreas Grimme;Andres Fernandez de Prado</Authors>
     <Company>Leslie Sanford</Company>
     <Description>A toolkit for creating MIDI applications with .NET.</Description>
